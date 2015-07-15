@@ -1,0 +1,51 @@
+body{
+    background-color: #efefef;
+    font-size: 14px;
+    color:#333;
+    font-family: "Arial", "Microsoft Yahei", "Hiragino Sans GB", "Simsun,sans-self";
+}
+
+
+.content{
+    width: 600px;
+    margin: 130px auto;
+    padding: 30px;
+}
+
+.content h3{
+
+}
+
+
+.login-y{
+    padding: 45px 80px;
+    background-color: #efefef;
+    border: 1px solid #ddd;
+}
+
+
+.footer{
+    width: 100%;
+    text-align: center;
+    background-color: #dedede;
+    padding: 10px 0;
+}
+
+.content-con{
+    width: 960px;
+    background-color: #fff;
+    padding:20px;
+    margin: 0 auto;
+    border: 1px solid #ddd;
+}
+
+.content-l{
+    width: 600px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 10px;
+}
+
+
+.list{
+}
