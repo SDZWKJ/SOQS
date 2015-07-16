@@ -16,7 +16,7 @@ public class OrderInfoDaoImpl extends BaseDaoImpl<OrderInfo> implements OrderInf
 	public OrderInfo findOrderBy(String ID, String orderID, String userID)
 			throws Exception {
 		Query query = getSession().createQuery("FROM orderInfo ");
-		List list = query.list();
+		List<?> list = query.list();
 		return (OrderInfo)(list.get(0));
 	}
 	
