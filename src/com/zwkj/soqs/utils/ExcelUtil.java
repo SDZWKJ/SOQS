@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -29,11 +30,40 @@ public class ExcelUtil {
 		//String cValue = "";                      //单元格的值
 		//--------------------------------
 		SalaryInfo salaryInfo = null;
-		String teacherId = "";
-		String teacherName = "";
-		String year = "";
-		String month = "";
-		String salary = "";
+		String empId = "";                 //人员编号
+		String teacherName = "";           //姓名
+		String yfSalary = "";   		      //应发项
+	    String sfSalary = "";		      //实发工资
+		String jcSalary = "";              //基础工资
+	    String gwSalary = "";              //岗位工资
+		String xjSalary = "";              //薪级工资
+		String glSalary = "";              //工龄工资
+		String tgSalary = "";              //提高工资
+		String jtSalary = "";              //津贴工资
+		String qtjbSalary = "";            //其他基本工资
+		String sydwjtbthjAllowance = "";   //事业单位津贴补贴合计
+		String zwbtAllowance = "";         //职务补贴
+		String tgjtAllowance = "";         //特岗津贴
+		String jxjtAllowance = "";         //警衔津贴
+		String jhljtAllowance = "";        //教护龄津贴
+		String bzrAllowance = "";          //班 主任津贴
+		String ggxbtWybtAllowance = "";    //改革性补贴二物业补贴
+		String qtbzAllowance = "";         //其他补助工资
+		String kpAward = "";               //考评奖
+		String qtSalary = "";              //其他工资
+		String dsznAllowance = "";         //独生子女费
+		String bfgzyfSalary = "";          //补发工资应发额
+		String zfAllowance = "";           //住房补贴
+		String kfTotal = "";               //扣发小记
+		String kgjjMoney = "";             //扣公积金
+		String kyalbxMoney = "";           //扣养老保险
+		String kyilbxMoney = "";           //扣医疗保险
+		String dbbzjMoney = "";            //大病补助金
+		String iitMoney = "";              //应纳所得税额
+		String kiitMoney = "";			  //扣所得税
+		String year = "";                  //年份
+		String month = "";                 //分月
+		Date dateSalary = null;              //把年份和月份转换成date类型存储，方便查询
 		
 		try {
 			poifsFileSystem = new POIFSFileSystem(new FileInputStream(path));
@@ -44,19 +74,15 @@ public class ExcelUtil {
 			int rowNum = sheet.getPhysicalNumberOfRows(); //行数
 			//int colNum = row.getPhysicalNumberOfCells();  //列数
 			
-			for(int i=1;i<rowNum;i++){  //从第二行开始读取数据
+			for(int i=3;i<rowNum;i++){  //从第四行开始读取数据
 				row = sheet.getRow(i);  //得到该行的数据
 				salaryInfo = new SalaryInfo();
-				teacherName = getCellFormatValue(row.getCell(0));  
-				teacherId = getCellFormatValue(row.getCell(1));
-				year = getCellFormatValue(row.getCell(2));
-				month = getCellFormatValue(row.getCell(3));
-				salary = getCellFormatValue(row.getCell(4));
-				salaryInfo.setTeacherId(teacherId);
-				salaryInfo.setTeacherName(teacherName);
-				salaryInfo.setYear(year);
-				salaryInfo.setMonth(month);
-				salaryInfo.setSalary(salary);
+				empId = getCellFormatValue(row.getCell(1));
+				teacherName = getCellFormatValue(row.getCell(2));
+				yfSalary = getCellFormatValue(row.getCell(3));
+				sfSalary = getCellFormatValue(row.getCell(4));
+				
+		
 				list.add(salaryInfo);
 			}
 		} catch (IOException e) {
