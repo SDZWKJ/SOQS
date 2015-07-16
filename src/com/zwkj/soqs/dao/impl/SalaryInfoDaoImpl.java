@@ -20,11 +20,17 @@ import com.zwkj.soqs.utils.Tools;
 @Repository
 public class SalaryInfoDaoImpl extends BaseDaoImpl<SalaryInfo> implements SalaryDao {
 	//获取所有工资信息
-	public List<SalaryInfo> getAllSalaryInfo() throws SoqsException {
+	public List<SalaryInfo> getSalaryInfo(TeacherInfo teacherInfo) throws SoqsException {
 		List<SalaryInfo> salaryInfoList = new ArrayList<SalaryInfo>();
 		
 		StringBuilder sql = new StringBuilder(128);
-		sql.append("select a.ID,a.TEACHER_ID,a.TEACHER_NAME,a.YEAR,a.MONTH,a.SALARY");
+		sql.append("select a.ID,a.EMP_ID,a.TEACHER_NAME,a.YF_SALARY,a.SF_SALARY,a.JC_SALARY");
+		sql.append(",a.GW_SALARY,a.XJ_SALARY,a.GL_SALARY,a.TG_SALARY,a.JT_SALARY,a.QTJB_SALARY");
+		sql.append(",a.SYDWJTBTHJ_ALLOWANCE,a.ZWBT_ ALLOWANCE,a.TGJT_ ALLOWANCE,a.JXJT_ ALLOWANCE");
+		sql.append(",a.JHLJT_ ALLOWANCE,a.BZR_ ALLOWANCE,a.GGXBT_WYBT_ALLOWANCE,a.QTBZ_ ALLOWANCE");
+		sql.append(",a.KP_ AWARD,a.QT_SALARY,a.DSZN_ ALLOWANCE,a.BFGZYF_SALARY,a.ZF_ ALLOWANCE");
+		sql.append(",a.KF_TOTAL,a.KGJJ_MONEY,a.KYALBX_MONEY,a.KYILBX_MONEY,a.DBBZJ_MONEY,a.IIT_MONEY");
+		sql.append(",a.KIIT_MONEY,a.YEAR,a.MONTH,a.DATE_SALARY,a.SFJS_TAX");
 		sql.append(" from SALARY_INFO a");
 		sql.append(" where 1=1");
 		SQLQuery sqlQuery = getSession().createSQLQuery(sql.toString());
@@ -37,11 +43,41 @@ public class SalaryInfoDaoImpl extends BaseDaoImpl<SalaryInfo> implements Salary
 				obj = (Object[]) itor.next();
 				salaryInfo = new SalaryInfo();
 				salaryInfo.setId(Integer.parseInt(obj[0].toString()));
-				salaryInfo.setTeacherId(Tools.isNull(obj[1], ""));
+				salaryInfo.setEmpId(Tools.isNull(obj[1], ""));
 				salaryInfo.setTeacherName(Tools.isNull(obj[2], ""));
-				salaryInfo.setYear(Tools.isNull(obj[3], ""));
-				salaryInfo.setMonth(Tools.isNull(obj[4], ""));
-				salaryInfo.setSalary(Tools.isNull(obj[5], ""));
+				salaryInfo.setYfSalary(Tools.isNull(obj[3], ""));
+				salaryInfo.setSfSalary(Tools.isNull(obj[4], ""));
+				salaryInfo.setJcSalary(Tools.isNull(obj[5], ""));
+				salaryInfo.setGwSalary(Tools.isNull(obj[6], ""));
+				salaryInfo.setXjSalary(Tools.isNull(obj[7], ""));
+				salaryInfo.setGlSalary(Tools.isNull(obj[8], ""));
+				salaryInfo.setTgSalary(Tools.isNull(obj[9], ""));
+				salaryInfo.setJtSalary(Tools.isNull(obj[10], ""));
+				salaryInfo.setQtjbSalary(Tools.isNull(obj[11], ""));
+				salaryInfo.setSydwjtbthjAllowance(Tools.isNull(obj[12], ""));
+				salaryInfo.setZwbtAllowance(Tools.isNull(obj[13], ""));
+				salaryInfo.setTgjtAllowance(Tools.isNull(obj[14], ""));
+				salaryInfo.setJxjtAllowance(Tools.isNull(obj[15], ""));
+				salaryInfo.setJhljtAllowance(Tools.isNull(obj[16], ""));
+				salaryInfo.setBzrAllowance(Tools.isNull(obj[17], ""));
+				salaryInfo.setGgxbtWybtAllowance(Tools.isNull(obj[18], ""));
+				salaryInfo.setQtbzAllowance(Tools.isNull(obj[19], ""));
+				salaryInfo.setKpAward(Tools.isNull(obj[20], ""));
+				salaryInfo.setQtSalary(Tools.isNull(obj[21], ""));
+				salaryInfo.setDsznAllowance(Tools.isNull(obj[22], ""));
+				salaryInfo.setBfgzyfSalary(Tools.isNull(obj[23], ""));
+				salaryInfo.setZfAllowance(Tools.isNull(obj[24], ""));
+				salaryInfo.setKfTotal(Tools.isNull(obj[25], ""));
+				salaryInfo.setKgjjMoney(Tools.isNull(obj[26], ""));
+				salaryInfo.setKyalbxMoney(Tools.isNull(obj[27], ""));
+				salaryInfo.setKyilbxMoney(Tools.isNull(obj[28], ""));
+				salaryInfo.setDbbzjMoney(Tools.isNull(obj[29], ""));
+				salaryInfo.setIitMoney(Tools.isNull(obj[30], ""));
+				salaryInfo.setKiitMoney(Tools.isNull(obj[31], ""));
+				salaryInfo.setYear(Tools.isNull(obj[32], ""));
+				salaryInfo.setMonth(Tools.isNull(obj[33], ""));
+				salaryInfo.setDateSalary(null);
+				salaryInfo.setSfjsTax(Tools.isNull(obj[35], ""));
 				salaryInfoList.add(salaryInfo);
 			}
 		}
@@ -70,6 +106,7 @@ public class SalaryInfoDaoImpl extends BaseDaoImpl<SalaryInfo> implements Salary
 	}
 
 	//根据用户的省份证查询半年的工资情况
+	/*
 	public List<SalaryInfo> getSalaryListById(SalaryInfo salaryInfo) throws SoqsException {
 		List<SalaryInfo> salaryInfoList = new ArrayList<SalaryInfo>();
 		
@@ -105,4 +142,5 @@ public class SalaryInfoDaoImpl extends BaseDaoImpl<SalaryInfo> implements Salary
 		}
 		return salaryInfoList;
 	}
+	*/
 }

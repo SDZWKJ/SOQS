@@ -51,7 +51,7 @@ public class SalaryInfo implements Serializable{
 	private String year;                  //年份
 	private String month;                 //分月
 	private Date dateSalary;              //把年份和月份转换成date类型存储，方便查询
-	private String  sfjsTax;              //是否计税
+	private String sfjsTax;              //是否计税
 	private String creator;               //录入人
 	private Date createdDate;             //创建时间
 	private String updater;               //更新人
