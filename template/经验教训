@@ -1,0 +1,43 @@
+当项目部署在一个已经在运行的服务器上的时候，往往在我们自己机器上运行的完美的项目，会出现很多问题，有些是由于自己粗心大意造成的，
+有些是版本兼容造成的，还有一些是一些配置造成的，在这里一一列出来，为以后不再犯同样的错误以明示。
+web项目部署到服务器上
+1:检查数据库配置文件，看一下数据库的访问端口需不需要变，用户名，密码需不需要变。
+2:在数据库服务器上创建配置文件中对应名称的数据库，并导入数据库脚本(慌忙操作和嘈杂的环境总让人丢三落四)。
+3:安装web服务器的一些注意事项(以tomcat为例，且以前服务器上已经运行着一个或多个tomcat)
+  3.1：使用安装版的tomcat的时候，要注意修改三个端口号，默认的三个端口号分别为(8080、8005、8009)，不然可能会出现端口被占用的错误，
+       <Server port="8005" shutdown="SHUTDOWN">    -----远程停服务端口
+       <Connector port="8080" protocol="HTTP/1.1"  connectionTimeout="20000"  redirectPort="8443" URIEncoding="UTF-8"/>    
+                                                   -----其中8080为HTTP端口，8443为HTTPS端口
+       <Connector port="8009" protocol="AJP/1.3" redirectPort="8443" />    
+                                                   ------8009为AJP端口
+  3.2:还有一个地方是选择JRE环境，大多数情况下默认是正确的，如果出现，Neither the JAVA_HOME nor the JRE_HOME environment 
+      variable is defined At least one of these environment variable is needed to run this program.这个时候要检查一下，选择得
+      JRE路径是否正确。
+  3.3:安装多个同版本的tomcat的时候应该注意,安装过程中修改服务名，不然服务名同名无法安装成功。     
+  3.4使用zip版的tomcat的时候，如果想把tomcat注册为windows的服务，其中有两处要注意的地方
+     第一个是:，使用非安装版的tomcat的时候，系统环境变量中要配置JAVA_HOME环境变量，或者在tomcat的相关bat文件中指定JAVA_HOME(具体
+       做法不在这里赘述。检查系统中是否配好java环境变量的的做法是，cmd下javac命令。认识javac,就代表配置成功了。
+     第二个是:在cmd中把路径切换到tomcat的bin目录下,service install 服务名，就可以把tomcat注册为windows服务了，注意服务名，不要和
+      以前安装的相同，如果不写服务名，会有一个默认的服务名，如果是第一次安装没有问题，如果是安装多个，这时就会服务名同名冲突，造
+      成后面的安装不成功。
+ 4:web服务器安装好后，运行过程中产生的一些问题
+    1：java.lang.OutofMemoryError: PermGen space.(可以查看tomcat日志文件  stderr和stdout,在stderr中能找到错误)
+      windows
+      $CATALINA_HOME/bin/catalina.bat，在echo "using CATALINA_BASE：$CATALINA_BASE"上面加入这一行内容：
+      set JAVA_OPTS=%JAVA_OPTS% -server -XX:PermSize=128m -XX:MaxPermSize=512m 
+      (zip版的tomcat遇到过多次，安装版的还没有遇到这个错误,安装版的安装完成还有也没有.bat文件，不知道安装版的在安装过程中是不是
+      在这方面进行了配置，若要修改,可能需要修改注册表，不在赘述)
+    2：用huibernate开发的程序，启动服务器，项目加载初始化完成后，SeesionFactory接着关闭或等一段时间关闭(在log的stdout中查看)，
+       在log的若发现......This is very likely a memory leak.
+       在tomcathome/conf/server.xml找到这个监听器，注释掉，不同版本的tomcat可能有差异，若遇到类似问题，优先考虑这种解决方案  
+      <!-- Prevent memory leaks due to use of particular java/javax APIs-->  
+      <Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener" />  
+  5：部署完项目，启动服务器之后，项目无法访问。要学会查看日志，日志在catalinahome/logs下，分析stderr和stdout就可以了
+     (慌忙操作和嘈杂的环境总让人丢三落四)。
+  6:启动服务，在日志文件中发现数据库服务器禁止访问、数据库连接打不开
+    1：检查数据库配置文件按是否正确无误
+    2：之后换个数据库驱动试试，也许会有神奇的效果
+    3:不是会不会的问题，而是有时候根本就没往那上面想，原因是....(慌忙操作和嘈杂的环境总让人丢三落四)。
+  7:等想起来再写.........
+    
+      
