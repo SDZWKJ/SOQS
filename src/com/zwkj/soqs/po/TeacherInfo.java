@@ -17,6 +17,7 @@ public class TeacherInfo implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	private int id;                //自增主键
+	private String empId;          //教职工编号
 	private String teacherId;      //身份证
 	private String queryPassword;  //查询密码
 	private String teacherName;    //姓名
@@ -36,6 +37,13 @@ public class TeacherInfo implements Serializable{
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	@Column(name="EMP_ID")
+	public String getEmpId() {
+		return empId;
+	}
+	public void setEmpId(String empId) {
+		this.empId = empId;
 	}
 	@Column(name="TEACHER_ID")
 	public String getTeacherId() {
