@@ -12,7 +12,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.zwkj.soqs.base.BaseController;
 import com.zwkj.soqs.base.SoqsException;
-import com.zwkj.soqs.po.SalaryInfo;
 import com.zwkj.soqs.po.TeacherInfo;
 import com.zwkj.soqs.service.SalaryService;
 import com.zwkj.soqs.utils.Constants;
@@ -41,7 +40,6 @@ public class SalaryController extends BaseController {
 			String queryPassword = request.getParameter("pass");
 			System.out.println("teacherId: "+teacherId);
 			System.out.println("queryPassword: "+queryPassword);
-			SalaryInfo salaryInfo = null;
 			TeacherInfo teacherInfo = new TeacherInfo();
 			teacherInfo.setTeacherId(teacherId);
 			teacherInfo.setQueryPassword(queryPassword);
@@ -57,11 +55,8 @@ public class SalaryController extends BaseController {
 				attributes.addFlashAttribute("verifyFlag", "true");
 				view.setViewName("redirect:index.html");
 			}else{
-				salaryInfo = new SalaryInfo();
-				salaryInfo.setTeacherId(teacherId);
-				returns = salaryService.getSalaryListById(salaryInfo);
+				returns = salaryService.getSalaryInfo(info);
 				System.out.println(returns.generateJsonData());
-				//attributes.addFlashAttribute("salaryList", returns.generateJsonData());
 				HttpSession session = request.getSession();
 				session.setAttribute("teacherInfo", info);
 				session.setAttribute("salaryList", returns.generateJsonData());

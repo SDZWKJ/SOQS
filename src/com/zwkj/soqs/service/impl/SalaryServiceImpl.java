@@ -18,11 +18,11 @@ import com.zwkj.soqs.service.SalaryService;
 public class SalaryServiceImpl extends BaseService<SalaryInfo> implements SalaryService {
 	@Autowired
 	private SalaryDao salaryDao;
-	//获取所有工资信息
+	//根据查询条件获取工资信息
 	@Transactional(propagation=Propagation.NOT_SUPPORTED,readOnly=true)
-	public ServiceReturns getAllSalaryInfo() throws SoqsException{
+	public ServiceReturns getSalaryInfo(TeacherInfo teacherInfo) throws SoqsException{
 		serviceReturns = new ServiceReturns();
-		serviceReturns.putData("allSalaryList", salaryDao.getAllSalaryInfo());
+		serviceReturns.putData("allSalaryList", salaryDao.getSalaryInfo(teacherInfo));
 		return serviceReturns;
 	}
 	//验证工资查询时的身份
@@ -36,12 +36,4 @@ public class SalaryServiceImpl extends BaseService<SalaryInfo> implements Salary
 		info.setQueryPassword(teacherInfo.getNewPassword());
 		getSession().flush();
 	}
-	//获取验证用户半年的工资列表
-	@Transactional(propagation=Propagation.NOT_SUPPORTED,readOnly=true)
-	public ServiceReturns getSalaryListById(SalaryInfo salaryInfo) throws SoqsException {
-		serviceReturns = new ServiceReturns();
-		serviceReturns.putData("salaryList", salaryDao.getSalaryListById(salaryInfo)); 
-		return serviceReturns;
-	}
-
 }

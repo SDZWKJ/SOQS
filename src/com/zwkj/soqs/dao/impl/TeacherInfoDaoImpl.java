@@ -18,7 +18,10 @@ public class TeacherInfoDaoImpl extends BaseDaoImpl<TeacherInfo> implements
 	//获取所有用户的信息
 	public List<TeacherInfo> getAllUserInfo() throws SoqsException {
 		StringBuilder hql = new StringBuilder();
-		hql.append("from teacherInfo");
+		//hql.append("from teacherInfo");
+		//hql.append(" where 1=1");
+		hql.append("select new com.zwkj.soqs.po.TeacherInfo(id,empId,teacherId,teacherName,creator,createdDate,updater,lastUpdatedDate)");
+		hql.append(" from teacherInfo");
 		hql.append(" where 1=1");
 		Query query = getSession().createQuery(hql.toString());
 		return query.list();

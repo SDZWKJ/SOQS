@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -61,8 +62,8 @@ public class ExcelUtil {
 		String dbbzjMoney = "";            //大病补助金
 		String iitMoney = "";              //应纳所得税额
 		String kiitMoney = "";			   //扣所得税
-		String year = "";                  //年份
-		String month = "";                 //分月
+		String yearSalary = "";                  //年份
+		String monthSalary = "";                 //分月
 		Date dateSalary = null;            //把年份和月份转换成date类型存储，方便查询
 		String  sfjsTax = "";              //是否计税
 		try {
@@ -108,10 +109,10 @@ public class ExcelUtil {
 				dbbzjMoney = getCellFormatValue(row.getCell(29));
 				iitMoney = getCellFormatValue(row.getCell(30));
 				kiitMoney = getCellFormatValue(row.getCell(31));
-				year = getCellFormatValue(row.getCell(32));
-				month = getCellFormatValue(row.getCell(33));
+				monthSalary = getCellFormatValue(row.getCell(32));
+				yearSalary = getCellFormatValue(row.getCell(34));
 				dateSalary = null;
-				sfjsTax = getCellFormatValue(row.getCell(34));
+				sfjsTax = getCellFormatValue(row.getCell(41));
 				salaryInfo.setEmpId(empId);
 				salaryInfo.setTeacherName(teacherName);
 				salaryInfo.setYfSalary(yfSalary);
@@ -144,8 +145,8 @@ public class ExcelUtil {
 				salaryInfo.setDbbzjMoney(dbbzjMoney);
 				salaryInfo.setIitMoney(iitMoney);
 				salaryInfo.setKiitMoney(kiitMoney);
-				salaryInfo.setYear(year);
-				salaryInfo.setMonth(month);
+				salaryInfo.setYearSalary(yearSalary);
+				salaryInfo.setMonthSalary(monthSalary);
 				salaryInfo.setDateSalary(dateSalary);
 				salaryInfo.setSfjsTax(sfjsTax);
 				list.add(salaryInfo);
@@ -177,16 +178,24 @@ public class ExcelUtil {
 			sheet = wb.getSheetAt(0);
 			row = sheet.getRow(0);
 			
-			int rowNum = sheet.getPhysicalNumberOfRows(); //行数
+			int rowNum = sheet.getPhysicalNumberOfRows();   //行数
 			//int colNum = row.getPhysicalNumberOfCells();  //列数
-			
+			int len = 0; //身份证长度15或18位                    
 			for(int i=2;i<rowNum;i++){  //从第三行开始读取数据
 				row = sheet.getRow(i);  //得到该行的数据
 				teacherInfo = new TeacherInfo();
 				empId = getCellFormatValue(row.getCell(1));           //教职工编号
 				teacherName = getCellFormatValue(row.getCell(2));     //1列  姓名   
 				teacherId = getCellFormatValue(row.getCell(3));       //2列  身份证
-				queryPassword = teacherId.substring(13);              //3列 查询密码,身份证后4位
+				queryPassword = Constants.DEFALT_PASSWORD;
+				if(!StringUtils.isEmpty(teacherId)){
+					len = teacherId.length();
+					if(len > 15){
+						queryPassword = teacherId.substring(14);              //3列 查询密码,身份证后4位
+					}else{
+						queryPassword = teacherId.substring(11);     
+					}
+				}
 				teacherInfo.setEmpId(empId);
 				teacherInfo.setTeacherId(teacherId);
 				teacherInfo.setTeacherName(teacherName);

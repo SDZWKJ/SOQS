@@ -4,6 +4,7 @@ import java.io.File;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -83,8 +84,9 @@ public class AdminCotroller extends BaseController {
 	@RequestMapping(value = "admin/getAllSalary", produces = "text/html;charset=utf-8")
 	public @ResponseBody 
 	String getAllSalaryInfo(HttpServletRequest request){
+		TeacherInfo teacherInfo = new TeacherInfo();
 		try {
-			returns = salaryService.getAllSalaryInfo();
+			returns = salaryService.getSalaryInfo(teacherInfo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -171,13 +173,47 @@ public class AdminCotroller extends BaseController {
 		return view;
 	}
 	
+	//用户信息添加
+	@RequestMapping(value="admin/addUser",produces="text/html;charset=utf-8")
+	public @ResponseBody 
+	String addUserInfo(HttpServletRequest request){
+		String teacherName = request.getParameter("userName");
+		String teacherId = request.getParameter("teacherId");
+		String empId = request.getParameter("empId");
+		String queryPassword = "1234";
+		if(!StringUtils.isEmpty(teacherId)){
+			int len = teacherId.length();
+			if(len>15){
+				queryPassword = teacherId.substring(14);
+			}else{
+				queryPassword = teacherId.substring(11);
+			}
+		}
+		
+		TeacherInfo teacherInfo = new TeacherInfo();
+		teacherInfo.setTeacherName(teacherName);
+		teacherInfo.setTeacherId(teacherId);
+		teacherInfo.setEmpId(empId);
+		teacherInfo.setQueryPassword(queryPassword);
+		try {
+			returns = teacherInfoService.save(teacherInfo);
+		} catch (SoqsException e) {
+			e.printStackTrace();
+		}
+		return returns.generateJsonData();
+	}
+	
 	//用户信息的删除
 	@RequestMapping(value="admin/deleteUseryByIds",produces="text/html;charset=utf-8")
 	public @ResponseBody
 	String delteUserByIds(HttpServletRequest request){
 		returns = new ControllerReturns();
 		String ids = request.getParameter("ids");
-		returns.putData("deleteNum", teacherInfoService.deleteByIdStr(TeacherInfo.class, ids));
+		try {
+			returns.putData("deleteNum", teacherInfoService.deleteByIdStr(TeacherInfo.class, ids));
+		} catch (SoqsException e) {
+			e.printStackTrace();
+		}
 		return returns.generateJsonData();
 	}
 	

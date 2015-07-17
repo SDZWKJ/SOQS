@@ -98,13 +98,14 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 	@Override
 	public int deleteByIds(Class<T> clazz, List<Integer> ids) {
 		String className = clazz.getSimpleName();
+		//做一个类名首字母小写处理，因为在PO中我们指定了Entity的name都是首字母小写的格式
 		String fClassName = className.substring(0, 1);
 		String lClasname = className.substring(1);
 		String clazzName = fClassName.toLowerCase()+lClasname;
-		logger.info("className  "+className);
-		logger.info("fClassName  "+fClassName);
-		logger.info("lClasname  "+lClasname);
-		logger.info("clazzName  "+clazzName);
+		//logger.info("className  "+className);
+		//logger.info("fClassName  "+fClassName);
+		//logger.info("lClasname  "+lClasname);
+		//logger.info("clazzName  "+clazzName);
 		Query query = hibernateTemplate.getSessionFactory().getCurrentSession().createQuery(//
 				"DELETE FROM "+clazzName+" WHERE id IN (:ids)"//
 				);

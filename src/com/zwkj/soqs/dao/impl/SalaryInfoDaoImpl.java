@@ -19,21 +19,29 @@ import com.zwkj.soqs.utils.Tools;
 
 @Repository
 public class SalaryInfoDaoImpl extends BaseDaoImpl<SalaryInfo> implements SalaryDao {
-	//获取所有工资信息
+	//根据条件查询工资信息
 	public List<SalaryInfo> getSalaryInfo(TeacherInfo teacherInfo) throws SoqsException {
 		List<SalaryInfo> salaryInfoList = new ArrayList<SalaryInfo>();
+		
+		String empId = teacherInfo.getEmpId();  //教职工编号
 		
 		StringBuilder sql = new StringBuilder(128);
 		sql.append("select a.ID,a.EMP_ID,a.TEACHER_NAME,a.YF_SALARY,a.SF_SALARY,a.JC_SALARY");
 		sql.append(",a.GW_SALARY,a.XJ_SALARY,a.GL_SALARY,a.TG_SALARY,a.JT_SALARY,a.QTJB_SALARY");
-		sql.append(",a.SYDWJTBTHJ_ALLOWANCE,a.ZWBT_ ALLOWANCE,a.TGJT_ ALLOWANCE,a.JXJT_ ALLOWANCE");
-		sql.append(",a.JHLJT_ ALLOWANCE,a.BZR_ ALLOWANCE,a.GGXBT_WYBT_ALLOWANCE,a.QTBZ_ ALLOWANCE");
-		sql.append(",a.KP_ AWARD,a.QT_SALARY,a.DSZN_ ALLOWANCE,a.BFGZYF_SALARY,a.ZF_ ALLOWANCE");
+		sql.append(",a.SYDWJTBTHJ_ALLOWANCE,a.ZWBT_ALLOWANCE,a.TGJT_ALLOWANCE,a.JXJT_ALLOWANCE");
+		sql.append(",a.JHLJT_ALLOWANCE,a.BZR_ALLOWANCE,a.GGXBT_WYBT_ALLOWANCE,a.QTBZ_ALLOWANCE");
+		sql.append(",a.KP_AWARD,a.QT_SALARY,a.DSZN_ALLOWANCE,a.BFGZYF_SALARY,a.ZF_ALLOWANCE");
 		sql.append(",a.KF_TOTAL,a.KGJJ_MONEY,a.KYALBX_MONEY,a.KYILBX_MONEY,a.DBBZJ_MONEY,a.IIT_MONEY");
-		sql.append(",a.KIIT_MONEY,a.YEAR,a.MONTH,a.DATE_SALARY,a.SFJS_TAX");
+		sql.append(",a.KIIT_MONEY,a.YEAR_SALARY,a.MONTH_SALARY,a.DATE_SALARY,a.SFJS_TAX");
 		sql.append(" from SALARY_INFO a");
 		sql.append(" where 1=1");
+		if(!StringUtils.isEmpty(empId)){
+			sql.append(" and a.EMP_ID=:empId");
+		}
 		SQLQuery sqlQuery = getSession().createSQLQuery(sql.toString());
+		if(!StringUtils.isEmpty(empId)){
+			sqlQuery.setString("empId", empId);
+		}
 		List<?> list = sqlQuery.list();
 		if(!CollectionUtils.isEmpty(list)){
 			Iterator<?> itor = list.iterator();
@@ -74,8 +82,8 @@ public class SalaryInfoDaoImpl extends BaseDaoImpl<SalaryInfo> implements Salary
 				salaryInfo.setDbbzjMoney(Tools.isNull(obj[29], ""));
 				salaryInfo.setIitMoney(Tools.isNull(obj[30], ""));
 				salaryInfo.setKiitMoney(Tools.isNull(obj[31], ""));
-				salaryInfo.setYear(Tools.isNull(obj[32], ""));
-				salaryInfo.setMonth(Tools.isNull(obj[33], ""));
+				salaryInfo.setYearSalary(Tools.isNull(obj[32], ""));
+				salaryInfo.setMonthSalary(Tools.isNull(obj[33], ""));
 				salaryInfo.setDateSalary(null);
 				salaryInfo.setSfjsTax(Tools.isNull(obj[35], ""));
 				salaryInfoList.add(salaryInfo);
@@ -86,8 +94,8 @@ public class SalaryInfoDaoImpl extends BaseDaoImpl<SalaryInfo> implements Salary
 
 	//查询工资时验证身份
 	public TeacherInfo verifyId(TeacherInfo teacherInfo) throws SoqsException {
-		String teacherId = teacherInfo.getTeacherId();
-		String queryPassword = teacherInfo.getQueryPassword();
+		String teacherId = teacherInfo.getTeacherId();         //身份证 
+		String queryPassword = teacherInfo.getQueryPassword(); //查询密码
 		 StringBuilder hql = new StringBuilder();
 		 hql.append("from teacherInfo where teacherId=:teacherId and queryPassword=:queryPassword");
 		 Query query = getSession().createQuery(hql.toString());

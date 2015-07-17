@@ -108,7 +108,10 @@ public class BaseService<T> {
 		int returnValue = 0;
 		if(!StringUtils.isEmpty(idStr)){
 			List<Integer> ids = new ArrayList<Integer>();
+			//substring,包括开始，不包括结束[)。
 			String tmp = StringUtils.substring(idStr, 0,idStr.length()-1);
+			//System.out.println("idStr: "+idStr);
+			//System.out.println("tmp: "+tmp);
 			StringTokenizer tokenizer = new StringTokenizer(tmp, ",");
 			while(tokenizer.hasMoreTokens()){
 				ids.add(Integer.parseInt(tokenizer.nextToken()));

@@ -106,13 +106,14 @@
         <property name="maxInMemorySize" value="40960"></property>  
    </bean>
    <!-- 配置拦截器 -->
+   <!--  
    <mvc:interceptors>    
    		<mvc:interceptor>
    			<mvc:mapping path="/admin/**" />
    			<bean class="com.zwkj.soqs.interceptor.LoginInterceptor" />    
    		</mvc:interceptor>
-   </mvc:interceptors>   
-   
+   </mvc:interceptors>  
+   --> 
 </beans>
 
 

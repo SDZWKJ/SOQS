@@ -27,4 +27,7 @@ public class Constants {
 	//后台
 	public static final String ALERT_MESSAGE_LOGIN_FAILURE = "5";
 	
+	//
+	public static final String DEFALT_PASSWORD = "1234";
+	
 }

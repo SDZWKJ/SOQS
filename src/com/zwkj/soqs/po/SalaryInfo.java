@@ -48,8 +48,8 @@ public class SalaryInfo implements Serializable{
 	private String dbbzjMoney;            //大病补助金
 	private String iitMoney;              //应纳所得税额
 	private String kiitMoney;			  //扣所得税
-	private String year;                  //年份
-	private String month;                 //分月
+	private String yearSalary;                  //年份
+	private String monthSalary;                 //分月
 	private Date dateSalary;              //把年份和月份转换成date类型存储，方便查询
 	private String sfjsTax;              //是否计税
 	private String creator;               //录入人
@@ -150,35 +150,35 @@ public class SalaryInfo implements Serializable{
 	public void setSydwjtbthjAllowance(String sydwjtbthjAllowance) {
 		this.sydwjtbthjAllowance = sydwjtbthjAllowance;
 	}
-	@Column(name="ZWBT_ ALLOWANCE")
+	@Column(name="ZWBT_ALLOWANCE")
 	public String getZwbtAllowance() {
 		return zwbtAllowance;
 	}
 	public void setZwbtAllowance(String zwbtAllowance) {
 		this.zwbtAllowance = zwbtAllowance;
 	}
-	@Column(name="TGJT_ ALLOWANCE")
+	@Column(name="TGJT_ALLOWANCE")
 	public String getTgjtAllowance() {
 		return tgjtAllowance;
 	}
 	public void setTgjtAllowance(String tgjtAllowance) {
 		this.tgjtAllowance = tgjtAllowance;
 	}
-	@Column(name="JXJT_ ALLOWANCE")
+	@Column(name="JXJT_ALLOWANCE")
 	public String getJxjtAllowance() {
 		return jxjtAllowance;
 	}
 	public void setJxjtAllowance(String jxjtAllowance) {
 		this.jxjtAllowance = jxjtAllowance;
 	}
-	@Column(name="JHLJT_ ALLOWANCE")
+	@Column(name="JHLJT_ALLOWANCE")
 	public String getJhljtAllowance() {
 		return jhljtAllowance;
 	}
 	public void setJhljtAllowance(String jhljtAllowance) {
 		this.jhljtAllowance = jhljtAllowance;
 	}
-	@Column(name="BZR_ ALLOWANCE")
+	@Column(name="BZR_ALLOWANCE")
 	public String getBzrAllowance() {
 		return bzrAllowance;
 	}
@@ -192,14 +192,14 @@ public class SalaryInfo implements Serializable{
 	public void setGgxbtWybtAllowance(String ggxbtWybtAllowance) {
 		this.ggxbtWybtAllowance = ggxbtWybtAllowance;
 	}
-	@Column(name="QTBZ_ ALLOWANCE")
+	@Column(name="QTBZ_ALLOWANCE")
 	public String getQtbzAllowance() {
 		return qtbzAllowance;
 	}
 	public void setQtbzAllowance(String qtbzAllowance) {
 		this.qtbzAllowance = qtbzAllowance;
 	}
-	@Column(name="KP_ AWARD")
+	@Column(name="KP_AWARD")
 	public String getKpAward() {
 		return kpAward;
 	}
@@ -213,7 +213,7 @@ public class SalaryInfo implements Serializable{
 	public void setQtSalary(String qtSalary) {
 		this.qtSalary = qtSalary;
 	}
-	@Column(name="DSZN_ ALLOWANCE")
+	@Column(name="DSZN_ALLOWANCE")
 	public String getDsznAllowance() {
 		return dsznAllowance;
 	}
@@ -227,7 +227,7 @@ public class SalaryInfo implements Serializable{
 	public void setBfgzyfSalary(String bfgzyfSalary) {
 		this.bfgzyfSalary = bfgzyfSalary;
 	}
-	@Column(name="ZF_ ALLOWANCE")
+	@Column(name="ZF_ALLOWANCE")
 	public String getZfAllowance() {
 		return zfAllowance;
 	}
@@ -283,19 +283,19 @@ public class SalaryInfo implements Serializable{
 	public void setKiitMoney(String kiitMoney) {
 		this.kiitMoney = kiitMoney;
 	}
-	@Column(name="YEAR")
-	public String getYear() {
-		return year;
+	@Column(name="YEAR_SALARY")
+	public String getYearSalary() {
+		return yearSalary;
 	}
-	public void setYear(String year) {
-		this.year = year;
+	public void setYearSalary(String yearSalary) {
+		this.yearSalary = yearSalary;
 	}
-	@Column(name="MONTH")
-	public String getMonth() {
-		return month;
+	@Column(name="MONTH_SALARY")
+	public String getMonthSalary() {
+		return monthSalary;
 	}
-	public void setMonth(String month) {
-		this.month = month;
+	public void setMonthSalary(String monthSalary) {
+		this.monthSalary = monthSalary;
 	}
 	@Column(name="DATE_SALARY")
 	public Date getDateSalary() {

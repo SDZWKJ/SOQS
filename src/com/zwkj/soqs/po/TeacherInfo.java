@@ -26,6 +26,25 @@ public class TeacherInfo implements Serializable{
 	private String updater;
 	private Date lastUpdatedDate;
 	
+	public TeacherInfo() {
+		super();
+	}
+	
+	public TeacherInfo(int id, String empId, String teacherId,
+			String teacherName, String creator, Date createdDate,
+			String updater, Date lastUpdatedDate) {
+		super();
+		this.id = id;
+		this.empId = empId;
+		this.teacherId = teacherId;
+		this.teacherName = teacherName;
+		this.creator = creator;
+		this.createdDate = createdDate;
+		this.updater = updater;
+		this.lastUpdatedDate = lastUpdatedDate;
+	}
+
+
 	//---------------------------
 	private String newPassword;
 	
