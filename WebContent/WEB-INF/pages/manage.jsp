@@ -344,13 +344,13 @@
 				  	<div class="form-group">
 				    	<label for="year" class="col-sm-2 control-label">职工编号:</label>
 				    	<div class="col-sm-6">
-				        	<input type="text" class="form-control" placeholder="年份">
+				        	<input type="text" class="form-control" placeholder="职工编号" value="">
 				    	</div>
 				 	</div>
 				 	<div class="form-group">
 				    	<label for="month" class="col-sm-2 control-label">查询密码:</label>
 				    	<div class="col-sm-6">
-				        	<input type="password" class="form-control" placeholder="不修改请留空">
+				        	<input type="password" class="form-control" placeholder="不修改请留空" value="">
 				    	</div>
 				 	</div>
 				</form>
