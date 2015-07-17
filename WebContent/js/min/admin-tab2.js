@@ -22,29 +22,163 @@ $(function(){
 					$("#wrappedTab02").append(tab01);
 					buildTab02(jsonData.data);
 				}
+			},
+			error:function(XMLHttpRequest, textStatus, errorThrown){
+				alert("服务器内部错误");
 			}
 		});//ajax-END
 	}
 	//buildTab02
 	function buildTab02(data){
-		var tab02Header = [{"sTitle": "选择","mData":"select"},{"sTitle": "编号","mData":"id"},{"sTitle": "身份证","mData":"teacherId"},{"sTitle": "密码","mData":"queryPassword"},
-						   {"sTitle": "姓名","mData":"teacherName"}
+		var tab02Header = [{"sTitle": "选择","mData":"select"},{"sTitle": "编号","mData":"id"},{"sTitle": "姓名","mData":"teacherName"},
+		                   {"sTitle": "身份证","mData":"teacherId"}
 						  ];
 		$("#tab02").dataTable({
 	        "aoColumns": tab02Header, 
 	        "aaData":data.allUser,
 	        "aoColumnDefs": [{sDefaultContent: '',aTargets: [ '_all' ]}],
 	        "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-	        	$('td:eq(0)', nRow).html( '<input type="checkbox">' );
+	        	$('td:eq(0)', nRow).html( '<input type="checkbox" name="userChk" value="'+aData.id+'" />' );
 	          }
 		});
+		oTable2 = $("#tab02").dataTable();
 	};
 	
-//	var oTable = $("#wrappedTab02 table").dataTable();
-//	$().on('click',function(){
-//		
-//	});
+	//-----------------用户数据修改-start--------------------------------
+	//init the data which need to be edited
+	$("#userEdit").on('click',function(){
+		console.log('进入修改 user modal....');
+		var chks = $("#wrappedTab02 :checkbox[name='userChk']:checked");
+		var chkSize = chks.size();
+		if(chkSize == 0){
+			alert('请选择一条用户信息进行编辑');
+			return false;
+		}
+		if(chkSize>1){
+			alert('只能选择一条用户信息进行编辑');
+			return false;
+		}	
+		var pos = chks.parent().parent()[0];
+		var rowData = oTable2.fnGetData(pos);
+		var teacherName = rowData.teacherName;
+		var teacherId = rowData.teacherId;
+		var empId = rowData.empId;
+		
+		
+		console.log(teacherName+":::"+teacherId+":::"+empId);
+		$("#userEditModal").modal('show');
+		
+	});
 	
+	//-----------------用户数据修改-end--------------------------------
+	
+	// ----------------用户数据增加-start-------------------------------
+	//show addModal
+	$("#userAdd").on('click',function(){
+		console.log("用户数据信息添加.......");
+		$("#userAddModal").modal('show');
+	});
+	//add opt
+	var submitFlag = true; //提交表示位，防止重复提交
+	$("#userAddModal .btn-primary").on('click',function(){
+		console.log("开始保存信息.....");
+		var userName = $("#userAddModal input[type='text']:eq(0)").val().trim();  //姓名
+		var teacherId = $("#userAddModal input[type='text']:eq(1)").val().trim(); //身份证号
+		var empId = $("#userAddModal input[type='text']:eq(2)").val().trim();     //职工编号
+		if(isEmpty(userName)){
+			alert("请输入姓名");
+			return false;
+		}
+		
+		if(isEmpty(teacherId)){
+			alert("请输入身份证号");
+			return false;
+		}
+		var idReg = /^(\d{15}$|^\d{18}$|^\d{17}(\d|X|x))$/;
+		var idRegFlag = idReg.test(teacherId);
+		if(!idRegFlag){
+			alert("身份证号码格式不正确");
+			return false;
+		}
+		
+		if(isEmpty(empId)){
+			alert("请输入员工号");
+			return false;
+		}
+		if(submitFlag){
+			submitFlag = false;
+			$.ajax({
+				type:"POST",
+				url:"../admin/addUser.html",
+				dataType:"json",
+				data:{
+					userName:userName,
+					teacherId:teacherId,
+					empId:empId
+				},
+				complete :function(XMLHttpRequest){
+					submitFlag = true;
+				},
+				success:function(jsonData){
+					if(jsonData.success){
+						ajaxRquest2();
+						$("#userAddModal").modal('hide');
+						alert('添加成功!');
+					}
+				},
+				error:function(XMLHttpRequest, textStatus, errorThrown){
+					alert("服务器内部错误");
+				}
+			});
+		}else{
+			console.log("重复提交......");
+		}
+	});
+	// ----------------用户数据增加-end-------------------------------
+	
+	// --------------用户数删除-start----------------------------
+	//用户信息删除
+	$("#userDel").on('click',function(){
+		console.log('用户信息删除....');
+		var chks = $("#wrappedTab02 :checkbox[name='userChk']:checked");
+		var chkSize = chks.size();
+		if(chkSize == 0){
+			alert('请至少选择一条用户信息进行删除');
+			return false;
+		} 
+		var ids = "";
+		$.each(chks,function(index,item){
+			ids += item.value+",";
+		});
+		var flag = confirm("确定要删除这些用户信息吗?");
+		if(!flag){
+			return false;
+		}
+		$.ajax({
+			type:"POST",
+			url:"../admin/deleteUseryByIds.html",
+			dataType:"json",
+			data:{
+				ids:ids
+			},
+			success:function(jsonData){
+				if(jsonData.success){
+					console.log(jsonData.data.deleteNum);
+					ajaxRquest2();
+					alert('删除成功!');
+				}
+			},
+			error:function(XMLHttpRequest, textStatus, errorThrown){
+				alert("服务器内部错误");
+			}
+		});
+	});
+	
+	// --------------用户数删除-end----------------------------
+
+	
+
+	// --------------用户数据导入-start----------------------------
 	//显示用户数据导入的modal
 	$("#userImport").on('click',function(){
 		console.log("弹出用户导入的modal.....");
@@ -61,6 +195,7 @@ $(function(){
 		}
 		$("#uploadForm2").attr("action","../admin/upload2.html").submit();
 	});
+	//--------------用户数据导入-end----------------------------
 	
 	//判断是否为空
 	function isEmpty(obj) {
