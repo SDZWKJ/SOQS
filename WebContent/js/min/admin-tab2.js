@@ -30,7 +30,7 @@ $(function(){
 	}
 	//buildTab02
 	function buildTab02(data){
-		var tab02Header = [{"sTitle": "选择","mData":"select"},{"sTitle": "编号","mData":"id"},{"sTitle": "姓名","mData":"teacherName"},
+		var tab02Header = [{"sTitle": "选择","mData":"select"},{"sTitle": "职工编号","mData":"empId"},{"sTitle": "姓名","mData":"teacherName"},
 		                   {"sTitle": "身份证","mData":"teacherId"}
 						  ];
 		$("#tab02").dataTable({
@@ -46,8 +46,10 @@ $(function(){
 	
 	//-----------------用户数据修改-start--------------------------------
 	//init the data which need to be edited
+	var id = null;
 	$("#userEdit").on('click',function(){
 		console.log('进入修改 user modal....');
+		clearUserEditModal();
 		var chks = $("#wrappedTab02 :checkbox[name='userChk']:checked");
 		var chkSize = chks.size();
 		if(chkSize == 0){
@@ -63,23 +65,87 @@ $(function(){
 		var teacherName = rowData.teacherName;
 		var teacherId = rowData.teacherId;
 		var empId = rowData.empId;
+		id = rowData.id;
+		console.log(teacherName+":::"+teacherId+":::"+empId+":::"+id);
 		
-		
-		console.log(teacherName+":::"+teacherId+":::"+empId);
+		$("#userEditModal input[type='text']:eq(0)").val(teacherName);
+		$("#userEditModal input[type='text']:eq(1)").val(teacherId);
+		$("#userEditModal input[type='text']:eq(2)").val(empId);
 		$("#userEditModal").modal('show');
-		
 	});
-	
+	//save userInfo after edit
+	var editFlag2 = true;
+	$("#userEditModal .btn-primary").on('click',function(){
+		console.log('保存修改后的信息........');
+		var teacherName = $("#userEditModal input[type='text']:eq(0)").val().trim();
+		var teacherId = $("#userEditModal input[type='text']:eq(1)").val().trim();
+		var empId = $("#userEditModal input[type='text']:eq(2)").val().trim();
+		var queryPassword = $("#userEditModal input[type='password']").val();
+		if(isEmpty(teacherName)){
+			alert("请输入姓名");
+			return false;
+		}
+		
+		if(isEmpty(teacherId)){
+			alert("请输入身份证号");
+			return false;
+		}
+		var idReg = /^(\d{15}$|^\d{18}$|^\d{17}(\d|X|x))$/;
+		var idRegFlag = idReg.test(teacherId);
+		if(!idRegFlag){
+			alert("身份证号码格式不正确");
+			return false;
+		}
+		
+		if(isEmpty(empId)){
+			alert("请输入员工号");
+			return false;
+		}
+		if(editFlag2){
+			editFlag2 = false;
+			$.ajax({
+				type:"POST",
+				url:"../admin/editUser.html",
+				dataType:"json",
+				data:{
+					id:id,
+					teacherName:teacherName,
+					teacherId:teacherId,
+					empId:empId,
+					queryPassword:queryPassword
+				},
+				complete:function(){
+					editFlag2 = true;
+				},
+				success:function(jsonData){
+					if(jsonData.success){
+						ajaxRquest2();
+						$("#userEditModal").modal('hide');
+						alert('修改成功!');
+					}else{
+						$("#userEditModal").modal('hide');
+						alert('没有修改成功!');
+					}
+				},
+				error:function(XMLHttpRequest, textStatus, errorThrown){
+					alert("服务器内部错误");
+				}
+			});
+		}else{
+			console.log("重复保存操作......");
+		}
+	});
 	//-----------------用户数据修改-end--------------------------------
 	
 	// ----------------用户数据增加-start-------------------------------
 	//show addModal
 	$("#userAdd").on('click',function(){
 		console.log("用户数据信息添加.......");
+		clearUserAddModal();
 		$("#userAddModal").modal('show');
 	});
 	//add opt
-	var submitFlag = true; //提交表示位，防止重复提交
+	var submitFlag2 = true; //提交表示位，防止重复提交
 	$("#userAddModal .btn-primary").on('click',function(){
 		console.log("开始保存信息.....");
 		var userName = $("#userAddModal input[type='text']:eq(0)").val().trim();  //姓名
@@ -105,8 +171,8 @@ $(function(){
 			alert("请输入员工号");
 			return false;
 		}
-		if(submitFlag){
-			submitFlag = false;
+		if(submitFlag2){
+			submitFlag2 = false;
 			$.ajax({
 				type:"POST",
 				url:"../admin/addUser.html",
@@ -117,7 +183,7 @@ $(function(){
 					empId:empId
 				},
 				complete :function(XMLHttpRequest){
-					submitFlag = true;
+					submitFlag2 = true;
 				},
 				success:function(jsonData){
 					if(jsonData.success){
@@ -196,6 +262,15 @@ $(function(){
 		$("#uploadForm2").attr("action","../admin/upload2.html").submit();
 	});
 	//--------------用户数据导入-end----------------------------
+	
+	//清除数据方法
+	function clearUserAddModal(){
+		$("#userAddModal input[type='text']").val("");
+	}
+	function clearUserEditModal(){
+		$("#userEditModal input[type='text']").val("");
+		$("#userEditModal input[type='password']").val("");
+	}
 	
 	//判断是否为空
 	function isEmpty(obj) {
