@@ -127,9 +127,9 @@
         </div>
         <div class="tab-pane" id="profile">
             <br/>
-            <button type="button" class="btn btn-primary btn-ms">新增</button>
-            <button type="button" class="btn btn-primary btn-ms">修改</button>
-            <button type="button" class="btn btn-primary btn-ms">删除</button>
+            <button type="button" id="userAdd" class="btn btn-primary btn-ms">新增</button>
+            <button type="button" id="userEdit" class="btn btn-primary btn-ms">修改</button>
+            <button type="button" id="userDel" class="btn btn-primary btn-ms">删除</button>
             <button type="button" id="userImport" class="btn btn-primary btn-ms">导入</button>
             <hr/>
             <div id="wrappedTab02">
@@ -276,6 +276,47 @@
 </div>
 <!-- 用户数据导入modal END -->
 
+<!-- 用户信息添加modal-START -->
+<div class="modal fade" id="userAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title">添加用户信息</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal">
+					<div class="form-group">
+				    	<label for="teacherName1" class="col-sm-2 control-label">姓名:</label>
+				     	<div class="col-sm-6">
+				        	<input type="text" class="form-control"  placeholder="姓名" value="">
+				     	</div>
+				     </div>
+				 	 <div class="form-group">
+				     	<label for="teacherId1" class="col-sm-2 control-label">身份证:</label>
+				    	<div class="col-sm-6">
+				        	<input type="text" class="form-control" placeholder="身份证号码" value="">
+				    	</div>
+				    </div>
+				  	<div class="form-group">
+				    	<label for="year" class="col-sm-2 control-label">职工编号:</label>
+				    	<div class="col-sm-6">
+				        	<input type="text" class="form-control"  placeholder="职工编号" value="">
+				    	</div>
+				 	</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				<button type="button" class="btn btn-primary">保存</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 用户信息添加modal-END -->
+
 <!-- 用户信息修改modal-START -->
 <div class="modal fade" id="userEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
 	<div class="modal-dialog" role="document">
@@ -284,38 +325,32 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h4 class="modal-title">用户信息</h4>
+				<h4 class="modal-title">用户信息修改</h4>
 			</div>
 			<div class="modal-body">
 				<form class="form-horizontal">
 					<div class="form-group">
 				    	<label for="teacherName1" class="col-sm-2 control-label">姓名:</label>
 				     	<div class="col-sm-6">
-				        	<input type="email" class="form-control" id="teacherName1" placeholder="姓名">
+				        	<input type="text" class="form-control" placeholder="姓名" value="">
 				     	</div>
 				     </div>
 				 	 <div class="form-group">
 				     	<label for="teacherId1" class="col-sm-2 control-label">身份证:</label>
 				    	<div class="col-sm-6">
-				        	<input type="password" class="form-control" id="teacherId1" placeholder="身份证">
+				        	<input type="text" class="form-control" placeholder="身份证" value="">
 				    	</div>
 				    </div>
 				  	<div class="form-group">
-				    	<label for="year" class="col-sm-2 control-label">年份:</label>
+				    	<label for="year" class="col-sm-2 control-label">职工编号:</label>
 				    	<div class="col-sm-6">
-				        	<input type="password" class="form-control" id="year" placeholder="年份">
+				        	<input type="text" class="form-control" placeholder="年份">
 				    	</div>
 				 	</div>
 				 	<div class="form-group">
-				    	<label for="month" class="col-sm-2 control-label">年份:</label>
+				    	<label for="month" class="col-sm-2 control-label">查询密码:</label>
 				    	<div class="col-sm-6">
-				        	<input type="password" class="form-control" id="month" placeholder="月份">
-				    	</div>
-				 	</div>
-				 	<div class="form-group">
-				    	<label for="salary" class="col-sm-2 control-label">工资:</label>
-				    	<div class="col-sm-6">
-				        	<input type="password" class="form-control" id="salary" placeholder="月份">
+				        	<input type="password" class="form-control" placeholder="不修改请留空">
 				    	</div>
 				 	</div>
 				</form>
