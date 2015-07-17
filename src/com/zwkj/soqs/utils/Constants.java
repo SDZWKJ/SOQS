@@ -29,5 +29,9 @@ public class Constants {
 	
 	//
 	public static final String DEFALT_PASSWORD = "1234";
+	//日期格式
+	public static final String DATE_PATTEN = "yyyy-MM-dd";
+	public static final String DATE_PATTEN_SEC = "yyyy-MM-dd HH:mm:ss";
+	public static final String DATE_PATTEN_MONTH = "yyyy-MM";
 	
 }

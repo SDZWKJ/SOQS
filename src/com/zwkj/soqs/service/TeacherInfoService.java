@@ -11,4 +11,6 @@ public interface TeacherInfoService {
 	public int deleteByIdStr(Class<TeacherInfo> clazz,String ids) throws SoqsException;
 	//添加用户信息
 	public ServiceReturns save(TeacherInfo teacherInfo) throws SoqsException;
+	//更新用户信息
+	public void updateUserById(TeacherInfo teacherInfo) throws SoqsException;
 }

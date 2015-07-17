@@ -93,18 +93,6 @@ public class AdminCotroller extends BaseController {
 		return returns.generateJsonData();
 	}
 	
-	//查询所有用户信息
-	@RequestMapping(value="admin/getAllUser",produces="text/html;charset=utf-8")
-	public @ResponseBody
-	String getAllUserInfo(HttpServletRequest request){
-		try {
-			returns  = teacherInfoService.getAllUserInfo();
-		} catch (SoqsException e) {
-			e.printStackTrace();
-		}
-		return returns.generateJsonData();
-	}
-	
 	//工资信息上传
 	@RequestMapping(value="admin/upload1",produces="text/html;charset=utf-8")
 	public ModelAndView uploadSalaryFile(@RequestParam(value = "file",required=false) MultipartFile file,HttpServletRequest request,RedirectAttributes attributes){
@@ -141,6 +129,19 @@ public class AdminCotroller extends BaseController {
 		returns = new ControllerReturns();
 		String ids = request.getParameter("ids");
 		returns.putData("deleteNum", salaryService.deleteByIdStr(SalaryInfo.class, ids));
+		return returns.generateJsonData();
+	}
+	
+	
+	//查询所有用户信息
+	@RequestMapping(value="admin/getAllUser",produces="text/html;charset=utf-8")
+	public @ResponseBody
+	String getAllUserInfo(HttpServletRequest request){
+		try {
+			returns  = teacherInfoService.getAllUserInfo();
+		} catch (SoqsException e) {
+			e.printStackTrace();
+		}
 		return returns.generateJsonData();
 	}
 
@@ -212,6 +213,30 @@ public class AdminCotroller extends BaseController {
 		try {
 			returns.putData("deleteNum", teacherInfoService.deleteByIdStr(TeacherInfo.class, ids));
 		} catch (SoqsException e) {
+			e.printStackTrace();
+		}
+		return returns.generateJsonData();
+	}
+	//用户信息修改
+	@RequestMapping(value="admin/editUser",produces="text/html;charset=utf-8")
+	public @ResponseBody
+	String editUserInfo(HttpServletRequest request){
+		returns = new ControllerReturns();
+		TeacherInfo teacherInfo = new TeacherInfo();
+	    int id = Integer.parseInt(request.getParameter("id"));
+		String teacherName = request.getParameter("teacherName");
+	    String teacherId = request.getParameter("teacherId");
+		String empId = request.getParameter("empId");
+		String queryPassword = request.getParameter("queryPassword");
+		teacherInfo.setId(id);
+		teacherInfo.setTeacherName(teacherName);
+		teacherInfo.setTeacherId(teacherId);
+		teacherInfo.setEmpId(empId);
+		teacherInfo.setQueryPassword(queryPassword);
+		try {
+			teacherInfoService.updateUserById(teacherInfo);
+		} catch (SoqsException e) {
+			returns.setSuccess(false);
 			e.printStackTrace();
 		}
 		return returns.generateJsonData();
