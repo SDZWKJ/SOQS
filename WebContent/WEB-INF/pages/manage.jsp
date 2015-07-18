@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta content="山东省日照第一中学" name="keywords"/>
     <meta content="山东省日照第一中学" name="description"/>
-    <link rel="shortcut icon" type="images/favicon.icon">
+    <link rel="shortcut icon" type="images/favicon.icon">+
 
     <!--==规定双核浏览器优先级==-->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -201,46 +201,220 @@
 
 <!-- 工资信息修改modal-START -->
 <div class="modal fade" id="salaryEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
-	<div class="modal-dialog" role="document">
+	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h4 class="modal-title">工资信息</h4>
+				<h4 class="modal-title">工资信息修改</h4>
 			</div>
 			<div class="modal-body">
-				<form class="form-horizontal">
-					<div class="form-group">
-				    	<label for="teacherName1" class="col-sm-2 control-label">姓名:</label>
-				     	<div class="col-sm-6">
-				        	<input type="email" class="form-control" id="teacherName1" placeholder="姓名">
-				     	</div>
-				     </div>
-				 	 <div class="form-group">
-				     	<label for="teacherId1" class="col-sm-2 control-label">身份证:</label>
-				    	<div class="col-sm-6">
-				        	<input type="password" class="form-control" id="teacherId1" placeholder="身份证">
-				    	</div>
-				    </div>
-				  	<div class="form-group">
-				    	<label for="year" class="col-sm-2 control-label">年份:</label>
-				    	<div class="col-sm-6">
-				        	<input type="password" class="form-control" id="year" placeholder="年份">
-				    	</div>
-				 	</div>
-				 	<div class="form-group">
-				    	<label for="month" class="col-sm-2 control-label">年份:</label>
-				    	<div class="col-sm-6">
-				        	<input type="password" class="form-control" id="month" placeholder="月份">
-				    	</div>
-				 	</div>
-				 	<div class="form-group">
-				    	<label for="salary" class="col-sm-2 control-label">工资:</label>
-				    	<div class="col-sm-6">
-				        	<input type="password" class="form-control" id="salary" placeholder="月份">
-				    	</div>
-				 	</div>
+				<form class="form-horizontal clearfix">
+					<div class="pull-left" style="width:400px;">
+						<div class="form-group">
+							<label class="col-sm-2 control-label">人员编号:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" placeholder="人员编号" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">姓名:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control"  placeholder="姓名" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">应发项:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control"  placeholder="应发项" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">实发工资:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control"  placeholder="实发工资" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">基础工资:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control"  placeholder="基础工资" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">岗位工资:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control"  placeholder="岗位工资" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">薪级工资:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control"  placeholder="薪级工资" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">工龄工资:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control"  placeholder="工龄工资" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">提高工资:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control"  placeholder="提高工资" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">津贴工资:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control"  placeholder="津贴工资" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">其他基本工资:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control"  placeholder="其他基本工资" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">事业单位津贴补贴合计:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control"  placeholder="事业单位津贴补贴合计" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">职务补贴:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control"  placeholder="职务补贴" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">特岗津贴:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control"  placeholder="特岗津贴" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">警衔津贴:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control"  placeholder="警衔津贴" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">教护龄津贴:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control"  placeholder="教护龄津贴" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">班主任津贴:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control"  placeholder="班主任津贴" value="">
+							</div>
+						</div>
+					</div>
+					
+					
+					<div class="pull-right" style="width:400px;">
+						<div class="form-group">
+							<label class="col-sm-2 control-label">改革性补贴二-物业补贴:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control"  placeholder="改革性补贴二-物业补贴" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label  class="col-sm-2 control-label">其他补助工资:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" placeholder="其他补助工资" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">考评奖:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" placeholder="考评奖" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">其他工资:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" placeholder="其他工资" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">独生子女费:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" placeholder="独生子女费" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">补发工资应发额:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" placeholder="补发工资应发额" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">住房补贴:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" placeholder="住房补贴" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">扣发小计:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" placeholder="扣发小计" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">扣公积金:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" placeholder="扣公积金" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">扣养老保险:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" placeholder="扣养老保险" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">扣医疗保险:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" placeholder="扣医疗保险" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">大病补救金:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" placeholder="大病补救金" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">应纳所得税额:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" placeholder="应纳所得税额" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">月份:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" placeholder="月份" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">年度:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" placeholder="年度" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">是否计税:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" placeholder="是否计税" value="">
+							</div>
+						</div>
+					</div>
 				</form>
 			</div>
 			<div class="modal-footer">
@@ -289,19 +463,19 @@
 			<div class="modal-body">
 				<form class="form-horizontal">
 					<div class="form-group">
-				    	<label for="teacherName1" class="col-sm-2 control-label">姓名:</label>
+				    	<label class="col-sm-2 control-label">姓名:</label>
 				     	<div class="col-sm-6">
 				        	<input type="text" class="form-control"  placeholder="姓名" value="">
 				     	</div>
 				     </div>
 				 	 <div class="form-group">
-				     	<label for="teacherId1" class="col-sm-2 control-label">身份证:</label>
+				     	<label class="col-sm-2 control-label">身份证:</label>
 				    	<div class="col-sm-6">
 				        	<input type="text" class="form-control" placeholder="身份证号码" value="">
 				    	</div>
 				    </div>
 				  	<div class="form-group">
-				    	<label for="year" class="col-sm-2 control-label">职工编号:</label>
+				    	<label class="col-sm-2 control-label">职工编号:</label>
 				    	<div class="col-sm-6">
 				        	<input type="text" class="form-control"  placeholder="职工编号" value="">
 				    	</div>
