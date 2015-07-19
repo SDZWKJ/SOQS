@@ -18,7 +18,7 @@ $(function(){
 			data:opts.data,
 			success:function(jsonData){
 				if(jsonData.success){
-					var tab01 = '<table id="tab01"></tab>';
+					var tab01 = '<table id="tab01" style="text-align:center;"></tab>';
 					$("#wrappedTab01").empty();
 					$("#wrappedTab01").append(tab01);
 					buildTab01(jsonData.data);
@@ -28,7 +28,7 @@ $(function(){
 	}
 	//build tab01
 	function buildTab01(data){
-		var tab01Header = [{"sTitle": "选择","mData":"select"},{"sTitle": "职工编号","mData":"empId"},{"sTitle": "姓名","mData":"teacherName"},
+		var tab01Header = [{"sTitle": "<input type='checkbox' id='selAllSalary' name='selAllSalary' onclick='selectAllS()'/>选择","mData":"select"},{"sTitle": "职工编号","mData":"empId"},{"sTitle": "姓名","mData":"teacherName"},
 		                   {"sTitle": "应发项","mData":"yfSalary"},{"sTitle": "实发工资","mData":"sfSalary"},{"sTitle": "基础工资","mData":"jcSalary"},{"sTitle": "岗位工资","mData":"gwSalary"},
 		                   {"sTitle": "薪级工资","mData":"xjSalary"},{"sTitle": "工龄工资","mData":"glSalary"},{"sTitle": "提高工资","mData":"tgSalary"},{"sTitle": "津贴奖金","mData":"jtSalary"},
 		                   {"sTitle": "其他基本工资","mData":"qtjbSalary"},{"sTitle": "事业单位津贴补贴合计","mData":"sydwjtbthjAllowance"},{"sTitle": "职务工资","mData":"zwbtAllowance"},{"sTitle": "特岗津贴","mData":"tgjtAllowance"},
@@ -42,8 +42,21 @@ $(function(){
 			"sScrollX": "100%",
 	        "sScrollXInner": "110%",
 	        "bScrollCollapse": true,
-	        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-	        "sZeroRecords": "没有检索到数据",
+	        "aLengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
+	        "bFilter": false,
+	        "bSort":false,
+	        "oLanguage": {
+	        	"sLengthMenu": "每页显示 _MENU_ 条记录",
+	        	"sEmptyTable": "没有数据",
+	        	"sZeroRecords": "抱歉， 没有找到",
+	        	"sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
+	        	"sInfoEmpty": "没有数据",
+	        	"sInfoFiltered": "(从 _MAX_ 条数据中检索)",
+	        	"oPaginate": {
+	            	"sPrevious": "前一页",
+	            	"sNext": "后一页"
+	        	}
+	        },
 	        "aoColumns": tab01Header, 
 	        "aaData":data.allSalaryList,
 	        "aoColumnDefs": [{sDefaultContent: '',aTargets: [ '_all' ]}],
@@ -313,6 +326,27 @@ $(function(){
 		});
 	});
 	// ----------------工资信息删除-end-------------------------------
+	
+	
+	//-----------------全选和全部选- checkbox的操作-started--------------
+	$("#selAllSalary").on('click',function(){
+		console.log('click event.....');
+		var chkFlag = $(this).prop('checked');
+		console.log(chkFlag);
+		if(chkFlag){
+			console.log('select all');
+			$("#wrappedTab01 :checkbox[name='salaryChk']").prop('checked',true);
+		}else{
+			console.log('unselect all');
+			$("#wrappedTab01 :checkbox[name='salaryChk']").prop('checked',false);
+		}
+	});
+	
+	function selectAllS(){
+		console.log('click event.....');
+	}
+	
+	//-----------------全选和全部选- checkbox的操作-started--------------
 	
 	//清除数据
 	function clearSalaryEditModal(){

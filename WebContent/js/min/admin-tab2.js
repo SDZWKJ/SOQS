@@ -17,7 +17,7 @@ $(function(){
 			dataType:"json",
 			success:function(jsonData){
 				if(jsonData.success){
-					var tab01 = '<table id="tab02"></tab>';
+					var tab01 = '<table id="tab02" style="text-align:center;"></tab>';
 					$("#wrappedTab02").empty();
 					$("#wrappedTab02").append(tab01);
 					buildTab02(jsonData.data);
@@ -30,10 +30,24 @@ $(function(){
 	}
 	//buildTab02
 	function buildTab02(data){
-		var tab02Header = [{"sTitle": "选择","mData":"select"},{"sTitle": "职工编号","mData":"empId"},{"sTitle": "姓名","mData":"teacherName"},
+		var tab02Header = [{"sTitle": "<input type='checkbox' name='selAllUser' />选择","mData":"select"},{"sTitle": "职工编号","mData":"empId"},{"sTitle": "姓名","mData":"teacherName"},
 		                   {"sTitle": "身份证","mData":"teacherId"}
 						  ];
 		$("#tab02").dataTable({
+			"bSort":false,
+			"oLanguage": {
+	        	"sLengthMenu": "每页显示 _MENU_ 条记录",
+	        	"sEmptyTable": "没有数据",
+	        	"sZeroRecords": "抱歉， 没有找到",
+	        	"sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
+	        	"sInfoEmpty": "没有数据",
+	        	"sInfoFiltered": "(从 _MAX_ 条数据中检索)",
+	        	"sSearch": "查询",
+	        	"oPaginate": {
+	            	"sPrevious": "前一页",
+	            	"sNext": "后一页"
+	        	}
+	        },
 	        "aoColumns": tab02Header, 
 	        "aaData":data.allUser,
 	        "aoColumnDefs": [{sDefaultContent: '',aTargets: [ '_all' ]}],
