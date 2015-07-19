@@ -183,7 +183,8 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h4 class="modal-title">数据导入</h4>
+				<h4 class="modal-title">工资信息数据导入</h4>
+				<h5 style="color: red">提示:为确保数据录入成功，请去掉Excel的只读模式</h5>
 			</div>
 			<div class="modal-body">
 				<form id="uploadForm1" method="post" enctype="multipart/form-data">  
@@ -211,11 +212,12 @@
 			</div>
 			<div class="modal-body">
 				<form class="form-horizontal clearfix">
+					<!-- 左边 -->
 					<div class="pull-left" style="width:400px;">
 						<div class="form-group">
-							<label class="col-sm-2 control-label">人员编号:</label>
+							<label class="col-sm-2 control-label">职工编号:</label>
 							<div class="col-sm-6">
-								<input type="text" class="form-control" placeholder="人员编号" value="">
+								<input type="text" class="form-control" placeholder="职工编号" value="">
 							</div>
 						</div>
 						<div class="form-group">
@@ -316,7 +318,7 @@
 						</div>
 					</div>
 					
-					
+					<!-- 左边 -->
 					<div class="pull-right" style="width:400px;">
 						<div class="form-group">
 							<label class="col-sm-2 control-label">改革性补贴二-物业补贴:</label>
@@ -397,6 +399,12 @@
 							</div>
 						</div>
 						<div class="form-group">
+							<label class="col-sm-2 control-label">扣所得税:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" placeholder="扣所得税" value="">
+							</div>
+						</div>
+						<div class="form-group">
 							<label class="col-sm-2 control-label">月份:</label>
 							<div class="col-sm-6">
 								<input type="text" class="form-control" placeholder="月份" value="">
@@ -435,6 +443,7 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 				<h4 class="modal-title">用户数据导入</h4>
+				<h5 style="color: red">提示:为确保数据录入成功，请去掉Excel的只读模式</h5>
 			</div>
 			<div class="modal-body">
 				<form id="uploadForm2" method="post" enctype="multipart/form-data">  
