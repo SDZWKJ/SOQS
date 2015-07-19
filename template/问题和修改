@@ -1,0 +1,5 @@
+1：dataTables 的数据都是左对齐。
+已解决：通过在table 属性行加样式 style="text-align:center;"
+2:后台管理工资列表，去掉dataTable自带的搜索，加上“年”和“月”的搜索。
+
+  
