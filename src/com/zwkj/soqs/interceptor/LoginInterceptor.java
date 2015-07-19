@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -17,6 +18,7 @@ import com.zwkj.soqs.utils.Tools;
  * @author XH
  *
  */
+@Component
 public class LoginInterceptor implements HandlerInterceptor {
 	
 	protected Log logger = LogFactory.getLog(this.getClass());
@@ -54,6 +56,8 @@ public class LoginInterceptor implements HandlerInterceptor {
 		}
 		//验证没有通过，跳转到登录界面
 		response.sendRedirect("login.html");
+		//adminCotroller.adminIndex(request);
+		//request.getRequestDispatcher("login.html");
 		return false;
 	}
 
