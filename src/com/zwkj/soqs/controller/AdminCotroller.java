@@ -132,6 +132,98 @@ public class AdminCotroller extends BaseController {
 		return returns.generateJsonData();
 	}
 	
+	@RequestMapping(value="admin/editSalary",produces="text/html;charset=utf-8")
+	public @ResponseBody 
+	String edtiSalaryInfo(HttpServletRequest request){
+		returns = new ControllerReturns();
+		SalaryInfo salaryInfo = new SalaryInfo();
+		
+		String sid =  request.getParameter("sid");                                             //ID
+		Integer id = null;
+		if(!Tools.isEmpty(sid)){
+			id = Integer.parseInt(sid);
+		}
+		String empId = request.getParameter("empId");                                    //职工编号
+		String teacherName = request.getParameter("teacherName");                          //姓名
+		String yfSalary = request.getParameter("yfSalary");                              //应发项
+		String sfSalary = request.getParameter("sfSalary");                              //实发工资
+		String jcSalary = request.getParameter("jcSalary");                              //基础工资
+		String gwSalary = request.getParameter("gwSalary");                              //岗位工资
+		String xjSalary = request.getParameter("xjSalary");                              //薪级工资
+		String glSalary = request.getParameter("glSalary");                             //工龄工资
+		String tgSalary = request.getParameter("tgSalary");                              //提高工资
+		String jtSalary = request.getParameter("jtSalary");                              //津贴工资
+		String qtjbSalary = request.getParameter("qtjbSalary");                          //其他基本工资
+		String sydwjtbthjAllowance = request.getParameter("sydwjtbthjAllowance");        //事业单位津贴补贴合计
+		String zwbtAllowance = request.getParameter("zwbtAllowance");                   //职务补贴
+		String tgjtAllowance = request.getParameter("tgjtAllowance");                   //特钢津贴
+		String jxjtAllowance = request.getParameter("jxjtAllowance");                    //警衔津贴
+		String jhljtAllowance = request.getParameter("jhljtAllowance");                  //教护龄工资
+		String bzrAllowance = request.getParameter("bzrAllowance");                      //班主任津贴
+		String ggxbtWybtAllowance = request.getParameter("ggxbtWybtAllowance");          //改革性补贴二-物业补贴
+		String qtbzAllowance = request.getParameter("qtbzAllowance");                    //其他补助工资
+		String kpAward = request.getParameter("kpAward");                               //考评奖
+		String qtSalary = request.getParameter("qtSalary");                              //其他工资
+		String dsznAllowance = request.getParameter("dsznAllowance");                    //独生子女费
+		String bfgzyfSalary = request.getParameter("bfgzyfSalary");                    //补发工资应发额
+		String zfAllowance = request.getParameter("zfAllowance");                        //住房补贴
+		String kfTotal = request.getParameter("kfTotal");                                //扣发小计
+		String kgjjMoney = request.getParameter("kgjjMoney");						      //扣公积金
+		String kyalbxMoney = request.getParameter("kyalbxMoney");                        //扣养老保险
+		String kyilbxMoney = request.getParameter("kyilbxMoney");                        //扣医疗保险
+		String dbbzjMoney = request.getParameter("dbbzjMoney");                          //大病补助金
+		String iitMoney = request.getParameter("iitMoney");                              //应纳所得税额
+		String kiitMoney = request.getParameter("kiitMoney");                            //扣所得税
+		String monthSalary = request.getParameter("monthSalary");                        //月份
+		String yearSalary = request.getParameter("yearSalary");                          //年度
+		String sfjsTax = request.getParameter("sfjsTax");                                //是否计税
+		
+		
+		salaryInfo.setId(id);
+		salaryInfo.setEmpId(empId);
+		salaryInfo.setTeacherName(teacherName);
+		salaryInfo.setYfSalary(yfSalary);
+		salaryInfo.setSfSalary(sfSalary);
+		salaryInfo.setJcSalary(jcSalary);
+		salaryInfo.setGwSalary(gwSalary);
+		salaryInfo.setXjSalary(xjSalary);
+		salaryInfo.setGlSalary(glSalary);
+		salaryInfo.setTgSalary(tgSalary);
+		salaryInfo.setJtSalary(jtSalary);
+		salaryInfo.setQtjbSalary(qtjbSalary);
+		salaryInfo.setSydwjtbthjAllowance(sydwjtbthjAllowance);
+		salaryInfo.setZwbtAllowance(zwbtAllowance);
+		salaryInfo.setTgjtAllowance(tgjtAllowance);
+		salaryInfo.setJxjtAllowance(jxjtAllowance);
+		salaryInfo.setJhljtAllowance(jhljtAllowance);
+		salaryInfo.setBzrAllowance(bzrAllowance);
+		salaryInfo.setGgxbtWybtAllowance(ggxbtWybtAllowance);
+		salaryInfo.setQtbzAllowance(qtbzAllowance);
+		salaryInfo.setKpAward(kpAward);
+		salaryInfo.setQtSalary(qtSalary);
+		salaryInfo.setDsznAllowance(dsznAllowance);
+		salaryInfo.setBfgzyfSalary(bfgzyfSalary);
+		salaryInfo.setZfAllowance(zfAllowance);
+		salaryInfo.setKfTotal(kfTotal);
+		salaryInfo.setKgjjMoney(kgjjMoney);
+		salaryInfo.setKyalbxMoney(kyalbxMoney);
+		salaryInfo.setKyilbxMoney(kyilbxMoney);
+		salaryInfo.setDbbzjMoney(dbbzjMoney);
+		salaryInfo.setIitMoney(iitMoney);
+		salaryInfo.setKiitMoney(kiitMoney);
+		salaryInfo.setMonthSalary(monthSalary);
+		salaryInfo.setYearSalary(yearSalary);
+		salaryInfo.setSfjsTax(sfjsTax);
+		try {
+			salaryService.updateSalaryInfo(salaryInfo);
+		} catch (SoqsException e) {
+			returns.setSuccess(false);
+			e.printStackTrace();
+		}
+		return returns.generateJsonData();
+	}
+	
+	
 	
 	//查询所有用户信息
 	@RequestMapping(value="admin/getAllUser",produces="text/html;charset=utf-8")

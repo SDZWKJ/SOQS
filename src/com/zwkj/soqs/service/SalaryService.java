@@ -14,4 +14,6 @@ public interface SalaryService {
 	public void midifyPassword(TeacherInfo teacherInfo) throws SoqsException;
 	//批量删除
 	public int deleteByIdStr(Class<SalaryInfo> clazz, String ids);
+	//update salary info
+	public void updateSalaryInfo(SalaryInfo salaryInfo) throws SoqsException;
 }

@@ -36,4 +36,62 @@ public class SalaryServiceImpl extends BaseService<SalaryInfo> implements Salary
 		info.setQueryPassword(teacherInfo.getNewPassword());
 		getSession().flush();
 	}
+	
+	//update salary info
+	public void updateSalaryInfo(SalaryInfo salaryInfo) throws SoqsException {
+		int id = salaryInfo.getId();
+		SalaryInfo info = salaryDao.getById(SalaryInfo.class, id);
+		
+		info.setEmpId(salaryInfo.getEmpId());
+		info.setTeacherName(salaryInfo.getTeacherName());
+		info.setYfSalary(salaryInfo.getYfSalary());
+		info.setSfSalary(salaryInfo.getSfSalary());
+		info.setJcSalary(salaryInfo.getJcSalary());
+		info.setGwSalary(salaryInfo.getGwSalary());
+		info.setXjSalary(salaryInfo.getXjSalary());
+		info.setGlSalary(salaryInfo.getGlSalary());
+		info.setTgSalary(salaryInfo.getTgSalary());
+		info.setJtSalary(salaryInfo.getJtSalary());
+		info.setQtjbSalary(salaryInfo.getQtjbSalary());
+		info.setSydwjtbthjAllowance(salaryInfo.getSydwjtbthjAllowance());
+		info.setZwbtAllowance(salaryInfo.getZwbtAllowance());
+		info.setTgjtAllowance(salaryInfo.getTgjtAllowance());
+		info.setJxjtAllowance(salaryInfo.getJxjtAllowance());
+		info.setJhljtAllowance(salaryInfo.getJhljtAllowance());
+		info.setBzrAllowance(salaryInfo.getBzrAllowance());
+		info.setGgxbtWybtAllowance(salaryInfo.getGgxbtWybtAllowance());
+		info.setQtbzAllowance(salaryInfo.getQtbzAllowance());
+		info.setKpAward(salaryInfo.getKpAward());
+		info.setQtSalary(salaryInfo.getQtSalary());
+		info.setDsznAllowance(salaryInfo.getDsznAllowance());
+		info.setBfgzyfSalary(salaryInfo.getBfgzyfSalary());
+		info.setZfAllowance(salaryInfo.getZfAllowance());
+		info.setKfTotal(salaryInfo.getKfTotal());
+		info.setKgjjMoney(salaryInfo.getKgjjMoney());
+		info.setKyalbxMoney(salaryInfo.getKyalbxMoney());
+		info.setKyilbxMoney(salaryInfo.getKyilbxMoney());
+		info.setDbbzjMoney(salaryInfo.getDbbzjMoney());
+		info.setIitMoney(salaryInfo.getIitMoney());
+		info.setKiitMoney(salaryInfo.getKiitMoney());
+		info.setMonthSalary(salaryInfo.getMonthSalary());
+		info.setYearSalary(salaryInfo.getYearSalary());
+		info.setSfjsTax(salaryInfo.getSfjsTax());
+		
+		getSession().flush();
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
