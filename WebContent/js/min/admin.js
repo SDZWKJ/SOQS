@@ -10,11 +10,13 @@ $(function(){
 	function init() {
 		var selYear = $("#selYear").val();
 		var selMonth = $("#selMonth").val();
+		var selName = $("#selName").val();
 		var opts = {
 			url : "../admin/getAllSalary.html",
 			data : {
 				selYear:selYear,
-				selMonth:selMonth
+				selMonth:selMonth,
+				selName:selName
 			}
 		};
 		//console.log("getAllSalary");
