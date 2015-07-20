@@ -7,6 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -40,7 +44,8 @@ public class AdminCotroller extends BaseController {
 	@Autowired
 	private TeacherInfoService teacherInfoService;
 	
-	List<SalaryInfo> salaryLst = null;
+	//Logger logger = LoggerFactory.getLogger(this.getClass());
+	//List<SalaryInfo> salaryLst = null;
 	
 	//后台登录界面
 	@RequestMapping(value = "admin/login", produces = "text/html;charset=utf-8")
@@ -72,7 +77,7 @@ public class AdminCotroller extends BaseController {
 		try {
 			info = adminService.validateLogin(adminInfo);
 			if(!Tools.isNull(info)){
-				System.out.println("登录成功");
+				//System.out.println("登录成功");
 				session.setAttribute("user", info);		
 				view.setViewName("redirect:managePage.html");
 			}else{
@@ -103,8 +108,8 @@ public class AdminCotroller extends BaseController {
 			currentMonth = String.valueOf(curMonth+1);
 		}
 		
-		System.out.println(currentYear);
-		System.out.println(currentMonth);
+		//System.out.println(currentYear);
+		//System.out.println(currentMonth);
 		
 		TeacherInfo teacherInfo = new TeacherInfo();
 		teacherInfo.setSelYear(currentYear);
@@ -152,17 +157,17 @@ public class AdminCotroller extends BaseController {
 		returns = new ControllerReturns();
 		String path = request.getSession().getServletContext().getRealPath("upload");
 		String fileName = file.getOriginalFilename();
-		System.out.println("path: "+path);
+		//System.out.println("path: "+path);
 		File targetFile = new File(path, fileName);
 		if(!targetFile.exists()){
 			targetFile.mkdirs();
 		}
 		try {
 			file.transferTo(targetFile);
-			System.out.println("上传完毕。。。。");
+			//System.out.println("上传完毕。。。。");
 			//读取excel的内容
 			String targetPath = path+"\\"+fileName;
-			System.out.println("targetPath "+targetPath);
+			//System.out.println("targetPath "+targetPath);
 			List<SalaryInfo> lst = salaryService.readSalaryExcel(targetPath); //把读取的内容放到List<Salary>中
 			if(!CollectionUtils.isEmpty(lst)){
 				SalaryInfo salaryInfo = lst.get(0);
@@ -350,24 +355,24 @@ public class AdminCotroller extends BaseController {
 	//@RequestMapping(value="admin/upload2",produces="text/html;charset=utf-8")
 	public ModelAndView uploadUserFile(@RequestParam(value = "file",required=false) MultipartFile file,HttpServletRequest request,RedirectAttributes attributes){
 		ModelAndView view = new ModelAndView();
-		System.out.println("进入uploadUserFile()");
+		//System.out.println("进入uploadUserFile()");
 		String path = request.getSession().getServletContext().getRealPath("upload2");
 		String fileName = file.getOriginalFilename();
-		System.out.println("path: "+path);
+		//System.out.println("path: "+path);
 		File targetFile = new File(path, fileName);
 		if(!targetFile.exists()){
 			targetFile.mkdirs();
 		}
 		try {
 			file.transferTo(targetFile);
-			System.out.println("上传完毕。。。。");
+			//System.out.println("上传完毕。。。。");
 			//读取excel的内容
 			String targetPath = path+"\\"+fileName;
-			System.out.println("targetPath "+targetPath);
+			//System.out.println("targetPath "+targetPath);
 			adminService.insertUserInfo(targetPath);
 			attributes.addFlashAttribute("tabFlag", "tab2");
 			attributes.addFlashAttribute("importFlag", "useccess");
-			System.out.println("导入数据库完毕..............");
+			//System.out.println("导入数据库完毕..............");
 		}  catch (Exception e) {
 			e.printStackTrace();
 		}

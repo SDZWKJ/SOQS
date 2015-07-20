@@ -38,8 +38,8 @@ public class SalaryController extends BaseController {
 		try {
 			String teacherId = request.getParameter("teacherId");
 			String queryPassword = request.getParameter("pass");
-			System.out.println("teacherId: "+teacherId);
-			System.out.println("queryPassword: "+queryPassword);
+			//system.out.println("teacherId: "+teacherId);
+			//system.out.println("queryPassword: "+queryPassword);
 			TeacherInfo teacherInfo = new TeacherInfo();
 			teacherInfo.setTeacherId(teacherId);
 			teacherInfo.setQueryPassword(queryPassword);
@@ -56,7 +56,7 @@ public class SalaryController extends BaseController {
 				view.setViewName("redirect:index.html");
 			}else{
 				returns = salaryService.getSalaryInfo(info);
-				System.out.println(returns.generateJsonData());
+				//system.out.println(returns.generateJsonData());
 				HttpSession session = request.getSession();
 				session.setAttribute("teacherInfo", info);
 				session.setAttribute("salaryList", returns.generateJsonData());
