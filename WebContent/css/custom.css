@@ -1,0 +1,38 @@
+/**
+  *ajax 请求产生的罩子
+  */
+.spin {
+  display:block;
+  position: fixed;
+/*top: 0;
+  bottom: 0;
+  left: 0; 
+  right: 0;
+  */
+  z-index: 16000;
+  background-color: #000000;
+  opacity:0.6;
+  filter: alpha(opacity=60);
+}
+
+.spin div {
+  position:fixed; 
+  top: 45%;
+  left:40%;
+  opacity:0.6;
+  color:#000000;
+  z-index: 16000;
+  /*color:white;*/
+}
+/** 图片*/
+.spinner {
+	position: fixed;
+	top: 47%;
+	left: 47%;
+	width: 70px;
+	height: 70px !important;
+	margin: 0 auto !important;
+	background: url(../images/loading.gif) no-repeat center;
+	display: block;
+	z-index: 16000;
+}
