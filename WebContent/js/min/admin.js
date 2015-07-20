@@ -1,4 +1,11 @@
 $(function(){
+	var date = new Date();
+	//console.log(date.getFullYear());
+	//console.log(date.getMonth());
+	var curYear = date.getFullYear();
+	var curMonth = date.getMonth();
+	$("#selYear").val(curYear);
+	$("#selMonth").val(curMonth+1);
 	init();
 	function init() {
 		var selYear = $("#selYear").val();
