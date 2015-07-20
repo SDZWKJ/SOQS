@@ -60,9 +60,9 @@ $(function(){
 	   //------------------------全选-started-----------------------------------
 	   //全选或者全不全
 		  $("#selAllUser").unbind('click').on('click',function(){
-			  console.log('selAllUser.............');
+			  //console.log('selAllUser.............');
 			  var selFlag = $(this).prop('checked');
-			  console.log(selFlag);
+			  //console.log(selFlag);
 			  var chks = $("#wrappedTab02 :checkbox[name='userChk']");
 			  chks.prop('checked',selFlag);
 		 });
@@ -70,10 +70,10 @@ $(function(){
 		  oTable2.$('td').click(function(event){
 			var chkNum = $("#wrappedTab02 :checkbox[name='userChk']").size();
 			var chkedNum = $("#wrappedTab02 :checkbox[name='userChk']:checked").size();
-			console.log(chkNum);
+			//console.log(chkNum);
 			var targetName = $(event.target).attr("name");
 			
-			console.log(targetName);
+			//console.log(targetName);
 			if('userChk'==targetName){
 				if(chkedNum == chkNum){
 					$("#selAllUser").prop('checked',true);
@@ -90,7 +90,7 @@ $(function(){
 	//init the data which need to be edited
 	var id = null;
 	$("#userEdit").on('click',function(){
-		console.log('进入修改 user modal....');
+		//console.log('进入修改 user modal....');
 		clearUserEditModal();
 		var chks = $("#wrappedTab02 :checkbox[name='userChk']:checked");
 		var chkSize = chks.size();
@@ -108,7 +108,7 @@ $(function(){
 		var teacherId = rowData.teacherId;
 		var empId = rowData.empId;
 		id = rowData.id;
-		console.log(teacherName+":::"+teacherId+":::"+empId+":::"+id);
+		//console.log(teacherName+":::"+teacherId+":::"+empId+":::"+id);
 		
 		$("#userEditModal input[type='text']:eq(0)").val(teacherName);
 		$("#userEditModal input[type='text']:eq(1)").val(teacherId);
@@ -118,7 +118,7 @@ $(function(){
 	//save userInfo after edit
 	var editFlag2 = true;
 	$("#userEditModal .btn-primary").on('click',function(){
-		console.log('保存修改后的信息........');
+		//console.log('保存修改后的信息........');
 		var teacherName = $("#userEditModal input[type='text']:eq(0)").val().trim();
 		//var teacherId = $("#userEditModal input[type='text']:eq(1)").val().trim();
 		var empId = $("#userEditModal input[type='text']:eq(2)").val().trim();
@@ -174,7 +174,7 @@ $(function(){
 				}
 			});
 		}else{
-			console.log("重复保存操作......");
+			//console.log("重复保存操作......");
 		}
 	});
 	//-----------------用户数据修改-end--------------------------------
@@ -182,14 +182,14 @@ $(function(){
 	// ----------------用户数据增加-start-------------------------------
 	//show addModal
 	$("#userAdd").on('click',function(){
-		console.log("用户数据信息添加.......");
+		//console.log("用户数据信息添加.......");
 		clearUserAddModal();
 		$("#userAddModal").modal('show');
 	});
 	//add opt
 	var submitFlag2 = true; //提交表示位，防止重复提交
 	$("#userAddModal .btn-primary").on('click',function(){
-		console.log("开始保存信息.....");
+		//console.log("开始保存信息.....");
 		var userName = $("#userAddModal input[type='text']:eq(0)").val().trim();  //姓名
 		var teacherId = $("#userAddModal input[type='text']:eq(1)").val().trim(); //身份证号
 		var empId = $("#userAddModal input[type='text']:eq(2)").val().trim();     //职工编号
@@ -246,7 +246,7 @@ $(function(){
 				}
 			});
 		}else{
-			console.log("重复提交......");
+			//console.log("重复提交......");
 		}
 	});
 	// ----------------用户数据增加-end-------------------------------
@@ -254,7 +254,7 @@ $(function(){
 	// --------------用户数删除-start----------------------------
 	//用户信息删除
 	$("#userDel").on('click',function(){
-		console.log('用户信息删除....');
+		//console.log('用户信息删除....');
 		var chks = $("#wrappedTab02 :checkbox[name='userChk']:checked");
 		var chkSize = chks.size();
 		if(chkSize == 0){
@@ -278,7 +278,7 @@ $(function(){
 			},
 			success:function(jsonData){
 				if(jsonData.success){
-					console.log(jsonData.data.deleteNum);
+					//console.log(jsonData.data.deleteNum);
 					ajaxRquest2();
 					alert('删除成功!');
 				}
@@ -296,13 +296,13 @@ $(function(){
 	// --------------用户数据导入-start----------------------------
 	//显示用户数据导入的modal
 	$("#userImport").on('click',function(){
-		console.log("弹出用户导入的modal.....");
+		//console.log("弹出用户导入的modal.....");
 		$("#userInfoImport").modal('show');
 	});
 	
 	//导入用户数据
 	$("#uploadButton2").on('click',function(){
-		console.log('开始文件上传.......');
+		//console.log('开始文件上传.......');
 		var file = $("#uploadForm2 :file").val();
 		if(isEmpty(file)){
 			alert("请选择用户信息Excel文件");

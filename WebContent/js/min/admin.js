@@ -10,7 +10,7 @@ $(function(){
 				selMonth:selMonth
 			}
 		};
-		console.log("getAllSalary");
+		//console.log("getAllSalary");
 		ajaxRequest(opts);
 	}
 	
@@ -73,9 +73,9 @@ $(function(){
 	   //------------------------全选-started-----------------------------------
 	   //全选或者全不全
 		  $("#selAllSalary").unbind('click').on('click',function(){
-			  console.log('selAllSalary.............');
+			  //console.log('selAllSalary.............');
 			  var selFlag = $(this).prop('checked');
-			  console.log(selFlag);
+			  //console.log(selFlag);
 			  var chks = $("#wrappedTab01 :checkbox[name='salaryChk']");
 			  chks.prop('checked',selFlag);
 		 });
@@ -83,10 +83,10 @@ $(function(){
 		oTable.$('td').click(function(event){
 			var chkNum = $("#wrappedTab01 :checkbox[name='salaryChk']").size();
 			var chkedNum = $("#wrappedTab01 :checkbox[name='salaryChk']:checked").size();
-			console.log(chkNum);
+			//console.log(chkNum);
 			var targetName = $(event.target).attr("name");
 			
-			console.log(targetName);
+			//console.log(targetName);
 			if('salaryChk'==targetName){
 				if(chkedNum == chkNum){
 					$("#selAllSalary").prop('checked',true);
@@ -151,7 +151,8 @@ $(function(){
 	//-----------------工资信息录入-start--------------------------------------
 	//工资信息录入
 	$("#salaryImport").on('click',function(){
-		console.log("弹出工资导入的modal.....");
+		//console.log("弹出工资导入的modal.....");
+		$("#uploadForm1 :file").val("");
 		$("#salaryInfoImport").modal('show');
 	});
 	//文件上传
@@ -167,7 +168,7 @@ $(function(){
 	
 	//文件上传
 	$("#uploadButton1").on('click',function(){
-		console.log('开始文件上传.......');
+		//console.log('开始文件上传.......');
 		var file = $("#uploadForm1 :file").val();
 		if(isEmpty(file)){
 			alert("请选择文件");
@@ -191,11 +192,13 @@ $(function(){
 						alert("Excel 文件中没有数据,请确认后重新操作!");
 					}
 					if(isUndefined(returns)){
+						$("#salaryInfoImport").modal('hide');
 						alert("文件读取失败,1:请检查是否是标准模板。2:请检查文件是否为只读文件。可能需要文件另存为，然后把保存界面-->工具--->常规工具-->建议只读的勾去掉");
 					}
 				}
 			},
 			error:function(data){
+				$("#salaryInfoImport").modal('hide');
 				alert('文件上传失败,1:请检查是否是标准模板。2:请检查文件是否为只读文件。可能需要文件另存为，然后在保存界面-->工具--->常规工具-->建议只读的勾去掉');
 			}
 			
@@ -206,12 +209,14 @@ $(function(){
 		insertSalary();
 		init();
 		$("#salaryInfoWrite").modal('hide');
+		$("#salaryInfoImport").modal('hide');
 	});
 	
 	$("#salaryInfoContinue .btn-success").on('click',function(){
 		insertSalary();
 		init();
 		$("#salaryInfoContinue").modal('hide');
+		$("#salaryInfoImport").modal('hide');
 	});
 	
 	function insertSalary(){
@@ -241,7 +246,7 @@ $(function(){
 	//init the data which need to be edited
 	var sid = null;
 	$("#salaryEdit").on('click',function(){
-		console.log('进入修改modal....');
+		//console.log('进入修改modal....');
 		//clear data
 		clearSalaryEditModal(); 
 		var chks = $("#wrappedTab01 :checkbox[name='salaryChk']:checked");
@@ -437,7 +442,7 @@ $(function(){
 	// ----------------工资信息删除-start-------------------------------
 	//工资信息删除
 	$("#salaryDel").on('click',function(){
-		console.log('工资信息删除....');
+		//console.log('工资信息删除....');
 		var chks = $("#wrappedTab01 :checkbox[name='salaryChk']:checked");
 		var chkSize = chks.size();
 		if(chkSize == 0){
@@ -461,7 +466,7 @@ $(function(){
 			},
 			success:function(JsonData){
 				if(JsonData.success){
-					console.log(JsonData.data.deleteNum);
+					//console.log(JsonData.data.deleteNum);
 					init();
 					alert('删除成功!');
 				}

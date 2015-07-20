@@ -7,8 +7,8 @@ $(function(){
 			return false;
 		}
 		var jsonSalaryList = JSON.parse(strSalaryList);
-		console.log(strSalaryList);
-		console.log(jsonSalaryList);
+		//console.log(strSalaryList);
+		//console.log(jsonSalaryList);
 		var header = [{"sTitle": "职工编号","mData":"empId"},{"sTitle": "姓名","mData":"teacherName"},
 	                  {"sTitle": "应发项","mData":"yfSalary"},{"sTitle": "实发工资","mData":"sfSalary"},{"sTitle": "基础工资","mData":"jcSalary"},{"sTitle": "岗位工资","mData":"gwSalary"},
 	                  {"sTitle": "薪级工资","mData":"xjSalary"},{"sTitle": "工龄工资","mData":"glSalary"},{"sTitle": "提高工资","mData":"tgSalary"},{"sTitle": "津贴奖金","mData":"jtSalary"},

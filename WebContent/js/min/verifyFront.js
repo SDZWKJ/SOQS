@@ -2,12 +2,12 @@ $(function() {
 	init();
 	alertMessage();
 	$(".btn-success").on('click', function() {
-		console.log("进入查询");
+		//console.log("进入查询");
 		$("#verifyId").attr("action","../query/salary.html").submit();
 	});
 
 	$(".btn-default").on('click', function() {
-		console.log("进入修改");
+		//console.log("进入修改");
 		$("#verifyId").attr("action","../query/initModify.html").submit();
 	});
 	
