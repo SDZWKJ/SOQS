@@ -30,7 +30,7 @@ $(function(){
 	}
 	//buildTab02
 	function buildTab02(data){
-		var tab02Header = [{"sTitle": "<input type='checkbox' name='selAllUser' />选择","mData":"select"},{"sTitle": "职工编号","mData":"empId"},{"sTitle": "姓名","mData":"teacherName"},
+		var tab02Header = [{"sTitle": "<input type='checkbox' name='selAllUser' id='selAllUser'/>选择","mData":"select"},{"sTitle": "职工编号","mData":"empId"},{"sTitle": "姓名","mData":"teacherName"},
 		                   {"sTitle": "身份证","mData":"teacherId"}
 						  ];
 		$("#tab02").dataTable({
@@ -56,6 +56,34 @@ $(function(){
 	          }
 		});
 		oTable2 = $("#tab02").dataTable();
+		
+	   //------------------------全选-started-----------------------------------
+	   //全选或者全不全
+		  $("#selAllUser").unbind('click').on('click',function(){
+			  console.log('selAllUser.............');
+			  var selFlag = $(this).prop('checked');
+			  console.log(selFlag);
+			  var chks = $("#wrappedTab02 :checkbox[name='userChk']");
+			  chks.prop('checked',selFlag);
+		 });
+		//sub checkbox
+		  oTable2.$('td').click(function(event){
+			var chkNum = $("#wrappedTab02 :checkbox[name='userChk']").size();
+			var chkedNum = $("#wrappedTab02 :checkbox[name='userChk']:checked").size();
+			console.log(chkNum);
+			var targetName = $(event.target).attr("name");
+			
+			console.log(targetName);
+			if('userChk'==targetName){
+				if(chkedNum == chkNum){
+					$("#selAllUser").prop('checked',true);
+				}
+				if(chkedNum == 0){
+					$("#selAllUser").prop('checked',false);
+				}
+			}
+		});
+	   //------------------------全选-end-----------------------------------	
 	};
 	
 	//-----------------用户数据修改-start--------------------------------
@@ -92,7 +120,7 @@ $(function(){
 	$("#userEditModal .btn-primary").on('click',function(){
 		console.log('保存修改后的信息........');
 		var teacherName = $("#userEditModal input[type='text']:eq(0)").val().trim();
-		var teacherId = $("#userEditModal input[type='text']:eq(1)").val().trim();
+		//var teacherId = $("#userEditModal input[type='text']:eq(1)").val().trim();
 		var empId = $("#userEditModal input[type='text']:eq(2)").val().trim();
 		var queryPassword = $("#userEditModal input[type='password']").val();
 		if(isEmpty(teacherName)){
@@ -100,16 +128,16 @@ $(function(){
 			return false;
 		}
 		
-		if(isEmpty(teacherId)){
-			alert("请输入身份证号");
-			return false;
-		}
-		var idReg = /^(\d{15}$|^\d{18}$|^\d{17}(\d|X|x))$/;
-		var idRegFlag = idReg.test(teacherId);
-		if(!idRegFlag){
-			alert("身份证号码格式不正确");
-			return false;
-		}
+//		if(isEmpty(teacherId)){
+//			alert("请输入身份证号");
+//			return false;
+//		}
+//		var idReg = /^(\d{15}$|^\d{18}$|^\d{17}(\d|X|x))$/;
+//		var idRegFlag = idReg.test(teacherId);
+//		if(!idRegFlag){
+//			alert("身份证号码格式不正确");
+//			return false;
+//		}
 		
 		if(isEmpty(empId)){
 			alert("请输入员工号");
@@ -124,7 +152,7 @@ $(function(){
 				data:{
 					id:id,
 					teacherName:teacherName,
-					teacherId:teacherId,
+					//teacherId:teacherId,
 					empId:empId,
 					queryPassword:queryPassword
 				},
@@ -201,9 +229,16 @@ $(function(){
 				},
 				success:function(jsonData){
 					if(jsonData.success){
-						ajaxRquest2();
-						$("#userAddModal").modal('hide');
-						alert('添加成功!');
+						var returnMessage = jsonData.data.returnMessage;
+						if(returnMessage == null){
+							ajaxRquest2();
+							$("#userAddModal").modal('hide');
+							alert('添加成功!');
+						}else if(returnMessage == '1'){
+							alert('已有相同职工编号或身份证号的记录存在!');
+						}
+					}else{
+						alert("服务器内部错误");
 					}
 				},
 				error:function(XMLHttpRequest, textStatus, errorThrown){

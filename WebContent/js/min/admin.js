@@ -1,9 +1,14 @@
 $(function(){
 	init();
 	function init() {
+		var selYear = $("#selYear").val();
+		var selMonth = $("#selMonth").val();
 		var opts = {
 			url : "../admin/getAllSalary.html",
-			data : {}
+			data : {
+				selYear:selYear,
+				selMonth:selMonth
+			}
 		};
 		console.log("getAllSalary");
 		ajaxRequest(opts);
@@ -28,7 +33,7 @@ $(function(){
 	}
 	//build tab01
 	function buildTab01(data){
-		var tab01Header = [{"sTitle": "<input type='checkbox' id='selAllSalary' name='selAllSalary' onclick='selectAllS()'/>选择","mData":"select"},{"sTitle": "职工编号","mData":"empId"},{"sTitle": "姓名","mData":"teacherName"},
+		var tab01Header = [{"sTitle": "<input type='checkbox' id='selAllSalary' name='selAllSalary'/>选择","mData":"select"},{"sTitle": "职工编号","mData":"empId"},{"sTitle": "姓名","mData":"teacherName"},
 		                   {"sTitle": "应发项","mData":"yfSalary"},{"sTitle": "实发工资","mData":"sfSalary"},{"sTitle": "基础工资","mData":"jcSalary"},{"sTitle": "岗位工资","mData":"gwSalary"},
 		                   {"sTitle": "薪级工资","mData":"xjSalary"},{"sTitle": "工龄工资","mData":"glSalary"},{"sTitle": "提高工资","mData":"tgSalary"},{"sTitle": "津贴奖金","mData":"jtSalary"},
 		                   {"sTitle": "其他基本工资","mData":"qtjbSalary"},{"sTitle": "事业单位津贴补贴合计","mData":"sydwjtbthjAllowance"},{"sTitle": "职务工资","mData":"zwbtAllowance"},{"sTitle": "特岗津贴","mData":"tgjtAllowance"},
@@ -65,12 +70,83 @@ $(function(){
 	          }
 		});
 	   oTable = $("#tab01").dataTable();
+	   //------------------------全选-started-----------------------------------
+	   //全选或者全不全
+		  $("#selAllSalary").unbind('click').on('click',function(){
+			  console.log('selAllSalary.............');
+			  var selFlag = $(this).prop('checked');
+			  console.log(selFlag);
+			  var chks = $("#wrappedTab01 :checkbox[name='salaryChk']");
+			  chks.prop('checked',selFlag);
+		 });
+		//sub checkbox
+		oTable.$('td').click(function(event){
+			var chkNum = $("#wrappedTab01 :checkbox[name='salaryChk']").size();
+			var chkedNum = $("#wrappedTab01 :checkbox[name='salaryChk']:checked").size();
+			console.log(chkNum);
+			var targetName = $(event.target).attr("name");
+			
+			console.log(targetName);
+			if('salaryChk'==targetName){
+				if(chkedNum == chkNum){
+					$("#selAllSalary").prop('checked',true);
+				}
+				if(chkedNum == 0){
+					$("#selAllSalary").prop('checked',false);
+				}
+			}
+		});
+	   //------------------------全选-end-----------------------------------	
 	}
 	
-	//点击刷新 Home
+	//-------------点击刷新 Home-started------------
 	$("#tab01Nav").on('click',function(){
 		init();
 	});
+	//-------------点击刷新 Home-end------------
+	
+	
+	//-----------------查询按钮-Started----------------------
+	$("#salarySearch").on('click',function(){
+		init();
+	});
+	//-----------------查询按钮-end---------------------------
+	
+	//-----------------删除整月记录---------
+	$("#delMonthRecord").on('click',function(){
+		var flag = confirm("确定删除当前整个月所有的记录吗！");
+		if(!flag){
+			return false;
+		}
+		$.ajax({
+			type:"POST",
+			url:"../admin/delMonthRecord.html",
+			dataType:"json",
+			data:{
+				selYear:$("#selYear").val(),
+				selMonth:$("#selMonth").val()
+			},
+			success:function(jsonData){
+				if(jsonData.success){
+					var num = jsonData.data.delNum;
+					//console.log(num);
+					//console.log(0==num);
+					if(0==num){
+						alert("没有符合条件的记录可以删除");
+					}else{
+						alert("共删除"+num+"条记录！")
+						init();
+					}
+				}else{
+					alert("服务器内部错误");
+				}
+			},
+			error:function(XMLHttpRequest, textStatus, errorThrown){
+				alert("服务器内部错误");
+			}
+		});
+	});
+	//-----------------删除整月记录-------
 	
 	//-----------------工资信息录入-start--------------------------------------
 	//工资信息录入
@@ -79,6 +155,17 @@ $(function(){
 		$("#salaryInfoImport").modal('show');
 	});
 	//文件上传
+//	$("#uploadButton1").on('click',function(){
+//		console.log('开始文件上传.......');
+//		var file = $("#uploadForm1 :file").val();
+//		if(isEmpty(file)){
+//			alert("请选择文件");
+//			return false;
+//		}
+//		$("#uploadForm1").attr("action","../admin/upload1.html").submit();
+//	});
+	
+	//文件上传
 	$("#uploadButton1").on('click',function(){
 		console.log('开始文件上传.......');
 		var file = $("#uploadForm1 :file").val();
@@ -86,9 +173,68 @@ $(function(){
 			alert("请选择文件");
 			return false;
 		}
-		$("#uploadForm1").attr("action","../admin/upload1.html").submit();
+		$("#uploadForm1").ajaxSubmit({
+			type:"POST",
+			dataType:"json",
+			url:"../admin/upload1.html",
+			success:function(jsonData){
+				if(jsonData.success){
+					var returns = jsonData.data.returnMessage;
+					//alert(returns);
+					if(returns == '1'){
+						$("#salaryInfoWrite").modal('show');
+					}
+					if(returns == '2'){
+						$("#salaryInfoContinue").modal('show')
+					}
+					if(returns == '3'){
+						alert("Excel 文件中没有数据,请确认后重新操作!");
+					}
+					if(isUndefined(returns)){
+						alert("文件读取失败,1:请检查是否是标准模板。2:请检查文件是否为只读文件。可能需要文件另存为，然后把保存界面-->工具--->常规工具-->建议只读的勾去掉");
+					}
+				}
+			},
+			error:function(data){
+				alert('文件上传失败,1:请检查是否是标准模板。2:请检查文件是否为只读文件。可能需要文件另存为，然后在保存界面-->工具--->常规工具-->建议只读的勾去掉');
+			}
+			
+		});
 	});
-	//-----------------工资信息录入-start--------------------------------------
+	
+	$("#salaryInfoWrite .btn-success").on('click',function(){
+		insertSalary();
+		init();
+		$("#salaryInfoWrite").modal('hide');
+	});
+	
+	$("#salaryInfoContinue .btn-success").on('click',function(){
+		insertSalary();
+		init();
+		$("#salaryInfoContinue").modal('hide');
+	});
+	
+	function insertSalary(){
+		$.ajax({
+			type:"POST",
+			url:"../admin/insertSalaryInfo.html",
+			dataType:"json",
+			success:function(jsonData){
+				if(jsonData.success){
+					alert("数据录入成功");
+				}else{
+					alert("数据录入失败");
+				}
+			},
+			error:function(XMLHttpRequest, textStatus, errorThrown){
+				alert("服务器内部错误");
+			}
+		});
+	};
+	
+	
+	
+	//-----------------工资信息录入-END--------------------------------------
 	
 	
 	//-----------------工资信息修改-start--------------------------------------
@@ -328,26 +474,6 @@ $(function(){
 	// ----------------工资信息删除-end-------------------------------
 	
 	
-	//-----------------全选和全部选- checkbox的操作-started--------------
-	$("#selAllSalary").on('click',function(){
-		console.log('click event.....');
-		var chkFlag = $(this).prop('checked');
-		console.log(chkFlag);
-		if(chkFlag){
-			console.log('select all');
-			$("#wrappedTab01 :checkbox[name='salaryChk']").prop('checked',true);
-		}else{
-			console.log('unselect all');
-			$("#wrappedTab01 :checkbox[name='salaryChk']").prop('checked',false);
-		}
-	});
-	
-	function selectAllS(){
-		console.log('click event.....');
-	}
-	
-	//-----------------全选和全部选- checkbox的操作-started--------------
-	
 	//清除数据
 	function clearSalaryEditModal(){
 		$("#salaryEditModal input[type='text']").val();
@@ -360,6 +486,13 @@ $(function(){
 	    }
 	    return false;
 	};
+	
+	function isUndefined(obj){
+		if(typeof(obj) == "undefined"){
+			return true;
+		}
+		return false;
+	}
 	
 	/**
        "oLanguage": {
