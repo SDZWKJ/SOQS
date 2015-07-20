@@ -169,7 +169,7 @@
 				</form>
         	</div>
         	<button type="button" id="salarySearch" class="btn btn btn-primary btn-ms">查询</button>
-        	<button type="button" id="delMonthRecord" class="btn btn btn-primary btn-ms">删除整月记录</button>
+        	<button type="button" id="delMonthRecord" class="btn btn btn-primary btn-ms">删除所选月记录</button>
         </div>
             <hr/>
         	<div id="wrappedTab01">
