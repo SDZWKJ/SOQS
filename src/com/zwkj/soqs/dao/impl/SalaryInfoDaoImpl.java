@@ -23,9 +23,10 @@ public class SalaryInfoDaoImpl extends BaseDaoImpl<SalaryInfo> implements Salary
 	public List<SalaryInfo> getSalaryInfo(TeacherInfo teacherInfo) throws SoqsException {
 		List<SalaryInfo> salaryInfoList = new ArrayList<SalaryInfo>();
 		
-		String empId = teacherInfo.getEmpId();      //教职工编号
-		String selYear = teacherInfo.getSelYear();  //年度
-		String selMonth = teacherInfo.getSelMonth(); //月份
+		String empId = teacherInfo.getEmpId();             //教职工编号
+		String selYear = teacherInfo.getSelYear();         //年度
+		String selMonth = teacherInfo.getSelMonth();       //月份
+		String teacherName = teacherInfo.getTeacherName(); //姓名
 		
 		StringBuilder sql = new StringBuilder(128);
 		sql.append("select a.ID,a.EMP_ID,a.TEACHER_NAME,a.YF_SALARY,a.SF_SALARY,a.JC_SALARY");
@@ -46,6 +47,10 @@ public class SalaryInfoDaoImpl extends BaseDaoImpl<SalaryInfo> implements Salary
 		if(!StringUtils.isEmpty(selMonth)){
 			sql.append(" and a.MONTH_SALARY=:selMonth");
 		}
+		if(!StringUtils.isEmpty(teacherName)){
+			sql.append(" and a.TEACHER_NAME like :teacherName");
+		}
+		sql.append(" order by a.YEAR_SALARY desc,a.MONTH_SALARY desc");
 		SQLQuery sqlQuery = getSession().createSQLQuery(sql.toString());
 		if(!StringUtils.isEmpty(empId)){
 			sqlQuery.setString("empId", empId);
@@ -55,6 +60,9 @@ public class SalaryInfoDaoImpl extends BaseDaoImpl<SalaryInfo> implements Salary
 		}
 		if(!StringUtils.isEmpty(selMonth)){
 			sqlQuery.setString("selMonth", selMonth);
+		}
+		if(!StringUtils.isEmpty(teacherName)){
+			sqlQuery.setString("teacherName", "%"+teacherName+"%");
 		}
 		List<?> list = sqlQuery.list();
 		if(!CollectionUtils.isEmpty(list)){
