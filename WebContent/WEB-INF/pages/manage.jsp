@@ -134,11 +134,10 @@
 					    <label class="col-sm-2 control-label">年度:</label>
 					    <div class="col-sm-5">
 					      <select class="form-control" id="selYear">
-							  <option value="" selected = "selected">默认当前年</option>
-							  <option value="2015">15</option>
-							  <option value="2016">16</option>
-							  <option value="2017">17</option>
-							  <option value="2018">18</option>
+							  <option value="2015">2015</option>
+							  <option value="2016">2016</option>
+							  <option value="2017">2017</option>
+							  <option value="2018">2018</option>
 						  </select>
 					    </div>
 					  </div>
@@ -150,7 +149,6 @@
 					    <label class="col-sm-2 control-label">月份:</label>
 					    <div class="col-sm-5">
 					      <select class="form-control" id="selMonth">
-							  <option value="" selected = "selected">默认当前月</option>
 							  <option value="1">1</option>
 							  <option value="2">2</option>
 							  <option value="3">3</option>
