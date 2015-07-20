@@ -34,4 +34,16 @@ public class Constants {
 	public static final String DATE_PATTEN_SEC = "yyyy-MM-dd HH:mm:ss";
 	public static final String DATE_PATTEN_MONTH = "yyyy-MM";
 	
+	//return message
+	public static final String USER_EXIST = "1";
+	
+	//文件上传常量
+	public static final String OVER_WRITE_OPTS = "1";
+	public static final String CONTINUE_OPTS = "2";
+	public static final String FILE_NO_CONTENT = "3";
+	
 }
+
+
+
+

@@ -56,5 +56,4 @@ public class AdminServiceImpl extends BaseService<AdminInfo> implements AdminSer
 			}
 		}
 	}
-	
 }

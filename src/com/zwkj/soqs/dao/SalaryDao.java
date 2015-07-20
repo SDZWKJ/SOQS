@@ -14,7 +14,8 @@ public interface SalaryDao extends BaseDao<SalaryInfo> {
 	public TeacherInfo verifyId(TeacherInfo teacherInfo) throws SoqsException;
 	//根据teacherId 获取用户信息
 	public TeacherInfo findByTeacId(String teacherId) throws SoqsException;
-	
+	//删除整月记录
+	public int delMonthRecord(TeacherInfo teacherInfo) throws SoqsException;
 	
 	//根据用户身份证查询半年的工资
 	//public List<SalaryInfo> getSalaryListById(SalaryInfo salaryInfo) throws SoqsException;

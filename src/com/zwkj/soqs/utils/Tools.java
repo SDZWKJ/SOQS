@@ -21,6 +21,33 @@ public class Tools {
     	Calendar CALENDAR=Calendar.getInstance();
     	return CALENDAR.getTime();
     }
+    
+	/**
+     * 返回当前月份
+     * @Author: xiaohua meng
+     * @param N/A
+     * @return int
+     * @throws ParseException
+     * @Description:
+     */
+	public static int getCurrentMonth() {
+		Calendar CALENDAR=Calendar.getInstance();
+		return CALENDAR.get(Calendar.MONTH);
+	}
+	/**
+     * 返回当前年份
+     * @Author: xiaohua meng
+     * @param N/A
+     * @return int
+     * @throws ParseException
+     * @Description:
+     */
+	public static int getCurrentYear() {
+		Calendar CALENDAR=Calendar.getInstance();
+		return CALENDAR.get(Calendar.YEAR);
+	}
+    
+    
     //日期格式化
 	public static String formatDate(Date date) {
 		if (date == null) {

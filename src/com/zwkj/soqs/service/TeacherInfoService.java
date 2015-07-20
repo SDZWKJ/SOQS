@@ -13,4 +13,8 @@ public interface TeacherInfoService {
 	public ServiceReturns save(TeacherInfo teacherInfo) throws SoqsException;
 	//更新用户信息
 	public void updateUserById(TeacherInfo teacherInfo) throws SoqsException;
+	//添加用户
+	public ServiceReturns insertUser(TeacherInfo teacherInfo) throws SoqsException;
+	//根据职工编号或者身份证号查询
+	//public ServiceReturns findTeacInfoByEmpIdOrId(TeacherInfo teacherInfo)throws SoqsException;
 }

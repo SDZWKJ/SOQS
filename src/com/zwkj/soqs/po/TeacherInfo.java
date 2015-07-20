@@ -26,6 +26,9 @@ public class TeacherInfo implements Serializable{
 	private String updater;
 	private Date lastUpdatedDate;
 	
+	private String selYear;       //所选年度
+	private String selMonth;      //所选月份
+	
 	public TeacherInfo() {
 		super();
 	}
@@ -121,6 +124,22 @@ public class TeacherInfo implements Serializable{
 	}
 	public void setNewPassword(String newPassword) {
 		this.newPassword = newPassword;
+	}
+	@Transient
+	public String getSelYear() {
+		return selYear;
+	}
+
+	public void setSelYear(String selYear) {
+		this.selYear = selYear;
+	}
+	@Transient
+	public String getSelMonth() {
+		return selMonth;
+	}
+
+	public void setSelMonth(String selMonth) {
+		this.selMonth = selMonth;
 	}
 	
 }

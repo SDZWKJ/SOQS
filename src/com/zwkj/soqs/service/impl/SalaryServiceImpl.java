@@ -1,5 +1,7 @@
 package com.zwkj.soqs.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -12,12 +14,15 @@ import com.zwkj.soqs.dao.SalaryDao;
 import com.zwkj.soqs.po.SalaryInfo;
 import com.zwkj.soqs.po.TeacherInfo;
 import com.zwkj.soqs.service.SalaryService;
+import com.zwkj.soqs.utils.ExcelUtil;
 
 @Service
 @Transactional
 public class SalaryServiceImpl extends BaseService<SalaryInfo> implements SalaryService {
 	@Autowired
 	private SalaryDao salaryDao;
+	
+	private List<SalaryInfo> list;
 	//根据查询条件获取工资信息
 	@Transactional(propagation=Propagation.NOT_SUPPORTED,readOnly=true)
 	public ServiceReturns getSalaryInfo(TeacherInfo teacherInfo) throws SoqsException{
@@ -25,6 +30,38 @@ public class SalaryServiceImpl extends BaseService<SalaryInfo> implements Salary
 		serviceReturns.putData("allSalaryList", salaryDao.getSalaryInfo(teacherInfo));
 		return serviceReturns;
 	}
+	
+	
+	//读取工资excel，返回List<SalaryInfo>
+	public List<SalaryInfo> readSalaryExcel(String targetPath)
+			throws SoqsException {
+		ExcelUtil excelUtil = new ExcelUtil();
+		List<SalaryInfo> salaryLst = excelUtil.readSalaryExcel(targetPath);
+		list = salaryLst;
+		return salaryLst;
+	}
+	
+	//根据查询条件获取工资信息list
+	@Transactional(propagation=Propagation.NOT_SUPPORTED,readOnly=true)
+	public List<SalaryInfo> getSalaryLst(TeacherInfo teacherInfo)
+			throws SoqsException {
+		return salaryDao.getSalaryInfo(teacherInfo);
+	}
+	
+	//把从excel读取的数据写入数据库
+	public void inserSalaryInfo() throws SoqsException {
+		SalaryInfo temp = list.get(0);
+		TeacherInfo temp2 = new TeacherInfo();
+		temp2.setSelYear(temp.getYearSalary());
+		temp2.setSelMonth(temp.getMonthSalary());
+		
+		int num = salaryDao.delMonthRecord(temp2);
+		System.out.println("删除的条数："+num);
+		for(SalaryInfo salaryInfo : list){
+			salaryDao.save(salaryInfo);
+		}
+	}
+	
 	//验证工资查询时的身份
 	@Transactional(propagation=Propagation.NOT_SUPPORTED,readOnly=true)
 	public TeacherInfo verifyId(TeacherInfo teacherInfo) throws SoqsException {
@@ -78,6 +115,13 @@ public class SalaryServiceImpl extends BaseService<SalaryInfo> implements Salary
 		info.setSfjsTax(salaryInfo.getSfjsTax());
 		
 		getSession().flush();
+	}
+	//删除整月记录
+	public ServiceReturns delMonthRecord(TeacherInfo teacherInfo)
+			throws SoqsException {
+		serviceReturns = new ServiceReturns();
+		serviceReturns.putData("delNum", salaryDao.delMonthRecord(teacherInfo));
+		return serviceReturns;
 	}
 }
 

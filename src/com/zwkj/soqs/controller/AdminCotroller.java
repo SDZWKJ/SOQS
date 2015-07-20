@@ -1,6 +1,8 @@
 package com.zwkj.soqs.controller;
 
 import java.io.File;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -8,6 +10,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -36,6 +39,8 @@ public class AdminCotroller extends BaseController {
 	private SalaryService salaryService;
 	@Autowired
 	private TeacherInfoService teacherInfoService;
+	
+	List<SalaryInfo> salaryLst = null;
 	
 	//后台登录界面
 	@RequestMapping(value = "admin/login", produces = "text/html;charset=utf-8")
@@ -84,7 +89,26 @@ public class AdminCotroller extends BaseController {
 	@RequestMapping(value = "admin/getAllSalary", produces = "text/html;charset=utf-8")
 	public @ResponseBody 
 	String getAllSalaryInfo(HttpServletRequest request){
+		int curYear = Tools.getCurrentYear();      //获取当年
+		int curMonth = Tools.getCurrentMonth();    //获取当前月
+		
+		String currentYear = request.getParameter("selYear");
+		String currentMonth = request.getParameter("selMonth");
+		//System.out.println(currentYear);
+		//System.out.println(currentMonth);
+		if(Tools.isEmpty(currentYear)){
+			currentYear = String.valueOf(curYear);
+		}
+		if(Tools.isEmpty(currentMonth)){
+			currentMonth = String.valueOf(curMonth+1);
+		}
+		
+		System.out.println(currentYear);
+		System.out.println(currentMonth);
+		
 		TeacherInfo teacherInfo = new TeacherInfo();
+		teacherInfo.setSelYear(currentYear);
+		teacherInfo.setSelMonth(currentMonth);
 		try {
 			returns = salaryService.getSalaryInfo(teacherInfo);
 		} catch (Exception e) {
@@ -94,10 +118,38 @@ public class AdminCotroller extends BaseController {
 	}
 	
 	//工资信息上传
+//	@RequestMapping(value="admin/upload1",produces="text/html;charset=utf-8")
+//	public ModelAndView uploadSalaryFile(@RequestParam(value = "file",required=false) MultipartFile file,HttpServletRequest request,RedirectAttributes attributes){
+//		ModelAndView view = new ModelAndView();
+//		System.out.println("进入uploadSalaryFile()");
+//		String path = request.getSession().getServletContext().getRealPath("upload");
+//		String fileName = file.getOriginalFilename();
+//		System.out.println("path: "+path);
+//		File targetFile = new File(path, fileName);
+//		if(!targetFile.exists()){
+//			targetFile.mkdirs();
+//		}
+//		try {
+//			file.transferTo(targetFile);
+//			System.out.println("上传完毕。。。。");
+//			//读取excel的内容
+//			String targetPath = path+"\\"+fileName;
+//			System.out.println("targetPath "+targetPath);
+//			adminService.insertSalaryInfo(targetPath);
+//			attributes.addFlashAttribute("tabFlag", "tab1");
+//			attributes.addFlashAttribute("importFlag", "sseccess");
+//			System.out.println("导入数据库完毕..............");
+//		}  catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		view.setViewName("redirect:managePage.html");
+//		return view;
+//	}
+	
 	@RequestMapping(value="admin/upload1",produces="text/html;charset=utf-8")
-	public ModelAndView uploadSalaryFile(@RequestParam(value = "file",required=false) MultipartFile file,HttpServletRequest request,RedirectAttributes attributes){
-		ModelAndView view = new ModelAndView();
-		System.out.println("进入uploadSalaryFile()");
+	public @ResponseBody 
+	String uploadSalaryFile(@RequestParam(value = "file",required=false) MultipartFile file,HttpServletRequest request,RedirectAttributes attributes){
+		returns = new ControllerReturns();
 		String path = request.getSession().getServletContext().getRealPath("upload");
 		String fileName = file.getOriginalFilename();
 		System.out.println("path: "+path);
@@ -111,24 +163,81 @@ public class AdminCotroller extends BaseController {
 			//读取excel的内容
 			String targetPath = path+"\\"+fileName;
 			System.out.println("targetPath "+targetPath);
-			adminService.insertSalaryInfo(targetPath);
-			attributes.addFlashAttribute("tabFlag", "tab1");
-			attributes.addFlashAttribute("importFlag", "sseccess");
-			System.out.println("导入数据库完毕..............");
+			List<SalaryInfo> lst = salaryService.readSalaryExcel(targetPath); //把读取的内容放到List<Salary>中
+			if(!CollectionUtils.isEmpty(lst)){
+				SalaryInfo salaryInfo = lst.get(0);
+				TeacherInfo teacherInfo = new TeacherInfo();
+				teacherInfo.setSelYear(salaryInfo.getYearSalary());    //年度
+				teacherInfo.setSelMonth(salaryInfo.getMonthSalary());  //月份
+				
+				List<SalaryInfo> lst2 = salaryService.getSalaryLst(teacherInfo); 
+				if(!CollectionUtils.isEmpty(lst2)){                     //判断数据库中是否已有这个月的数据
+					returns.putData("returnMessage", Constants.OVER_WRITE_OPTS);
+				}else{
+					returns.putData("returnMessage", Constants.CONTINUE_OPTS);
+				}
+				
+			}else{
+				returns.putData("returnMessage", Constants.FILE_NO_CONTENT);
+			}
 		}  catch (Exception e) {
 			e.printStackTrace();
 		}
-		view.setViewName("redirect:managePage.html");
-		return view;
+		returns.putData("test", "file upload testing");
+		return returns.generateJsonData();
 	}
 	
+	//把List<Salary>写入数据库
+	@RequestMapping(value="admin/insertSalaryInfo",produces="text/html;charset=utf-8")
+	public @ResponseBody 
+	String insertSalaryInfo(HttpServletRequest request){
+		returns = new ControllerReturns();
+		try {
+			salaryService.inserSalaryInfo();
+		} catch (SoqsException e) {
+			returns.setSuccess(false);
+			e.printStackTrace();
+		}
+		return returns.generateJsonData();
+	}
+	
+	
 	//工资信息的删除
-	@RequestMapping(value="admin/deleteSalaryByIds",produces="text/html;charset=utf-8")
+	//@RequestMapping(value="admin/deleteSalaryByIds",produces="text/html;charset=utf-8")
 	public @ResponseBody
 	String delteSalaryByIds(HttpServletRequest request){
 		returns = new ControllerReturns();
 		String ids = request.getParameter("ids");
 		returns.putData("deleteNum", salaryService.deleteByIdStr(SalaryInfo.class, ids));
+		return returns.generateJsonData();
+	}
+	
+	//删除整月记录
+	@RequestMapping(value="admin/delMonthRecord",produces="text/html;charset=utf-8")
+	public @ResponseBody
+	String delMonthRecord(HttpServletRequest request){
+		int curYear = Tools.getCurrentYear();      //获取当年
+		int curMonth = Tools.getCurrentMonth();    //获取当前月
+		
+		String currentYear = request.getParameter("selYear");
+		String currentMonth = request.getParameter("selMonth");
+		
+		if(Tools.isEmpty(currentYear)){
+			currentYear = String.valueOf(curYear);
+		}
+		if(Tools.isEmpty(currentMonth)){
+			currentMonth = String.valueOf(curMonth+1);
+		}
+		
+		TeacherInfo teacherInfo = new TeacherInfo();
+		teacherInfo.setSelYear(currentYear);
+		teacherInfo.setSelMonth(currentMonth);
+		try {
+			returns = salaryService.delMonthRecord(teacherInfo);
+		} catch (SoqsException e) {
+			returns.setSuccess(false);
+			e.printStackTrace();
+		}
 		return returns.generateJsonData();
 	}
 	
@@ -238,7 +347,7 @@ public class AdminCotroller extends BaseController {
 	}
 
 	//用户信息上传
-	@RequestMapping(value="admin/upload2",produces="text/html;charset=utf-8")
+	//@RequestMapping(value="admin/upload2",produces="text/html;charset=utf-8")
 	public ModelAndView uploadUserFile(@RequestParam(value = "file",required=false) MultipartFile file,HttpServletRequest request,RedirectAttributes attributes){
 		ModelAndView view = new ModelAndView();
 		System.out.println("进入uploadUserFile()");
@@ -289,8 +398,9 @@ public class AdminCotroller extends BaseController {
 		teacherInfo.setEmpId(empId);
 		teacherInfo.setQueryPassword(queryPassword);
 		try {
-			returns = teacherInfoService.save(teacherInfo);
+			returns = teacherInfoService.insertUser(teacherInfo);
 		} catch (SoqsException e) {
+			returns.setSuccess(false);
 			e.printStackTrace();
 		}
 		return returns.generateJsonData();
@@ -317,12 +427,12 @@ public class AdminCotroller extends BaseController {
 		TeacherInfo teacherInfo = new TeacherInfo();
 	    int id = Integer.parseInt(request.getParameter("id"));
 		String teacherName = request.getParameter("teacherName");
-	    String teacherId = request.getParameter("teacherId");
+	    //String teacherId = request.getParameter("teacherId");
 		String empId = request.getParameter("empId");
 		String queryPassword = request.getParameter("queryPassword");
 		teacherInfo.setId(id);
 		teacherInfo.setTeacherName(teacherName);
-		teacherInfo.setTeacherId(teacherId);
+		//teacherInfo.setTeacherId(teacherId);
 		teacherInfo.setEmpId(empId);
 		teacherInfo.setQueryPassword(queryPassword);
 		try {

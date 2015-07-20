@@ -23,7 +23,9 @@ public class SalaryInfoDaoImpl extends BaseDaoImpl<SalaryInfo> implements Salary
 	public List<SalaryInfo> getSalaryInfo(TeacherInfo teacherInfo) throws SoqsException {
 		List<SalaryInfo> salaryInfoList = new ArrayList<SalaryInfo>();
 		
-		String empId = teacherInfo.getEmpId();  //教职工编号
+		String empId = teacherInfo.getEmpId();      //教职工编号
+		String selYear = teacherInfo.getSelYear();  //年度
+		String selMonth = teacherInfo.getSelMonth(); //月份
 		
 		StringBuilder sql = new StringBuilder(128);
 		sql.append("select a.ID,a.EMP_ID,a.TEACHER_NAME,a.YF_SALARY,a.SF_SALARY,a.JC_SALARY");
@@ -38,9 +40,21 @@ public class SalaryInfoDaoImpl extends BaseDaoImpl<SalaryInfo> implements Salary
 		if(!StringUtils.isEmpty(empId)){
 			sql.append(" and a.EMP_ID=:empId");
 		}
+		if(!StringUtils.isEmpty(selYear)){
+			sql.append(" and a.YEAR_SALARY=:selYear");
+		}
+		if(!StringUtils.isEmpty(selMonth)){
+			sql.append(" and a.MONTH_SALARY=:selMonth");
+		}
 		SQLQuery sqlQuery = getSession().createSQLQuery(sql.toString());
 		if(!StringUtils.isEmpty(empId)){
 			sqlQuery.setString("empId", empId);
+		}
+		if(!StringUtils.isEmpty(selYear)){
+			sqlQuery.setString("selYear", selYear);
+		}
+		if(!StringUtils.isEmpty(selMonth)){
+			sqlQuery.setString("selMonth", selMonth);
 		}
 		List<?> list = sqlQuery.list();
 		if(!CollectionUtils.isEmpty(list)){
@@ -111,6 +125,35 @@ public class SalaryInfoDaoImpl extends BaseDaoImpl<SalaryInfo> implements Salary
 		Query query = getSession().createQuery(hql.toString());
 		query.setString("teacherId", teacherId);
 		return (TeacherInfo) query.uniqueResult();
+	}
+
+	//删除整月记录
+	public int delMonthRecord(TeacherInfo teacherInfo) throws SoqsException {
+		String selYear = teacherInfo.getSelYear();
+		String selMonth = teacherInfo.getSelMonth();
+		
+		StringBuilder hql = new StringBuilder(128);
+		hql.append("delete from salaryInfo");
+		hql.append(" where 1=1");
+		
+		if(!StringUtils.isEmpty(selYear)){
+			hql.append(" and yearSalary=:selYear");
+		}
+		if(!StringUtils.isEmpty(selMonth)){
+			hql.append(" and monthSalary=:selMonth");
+		}
+		
+		Query query = getSession().createQuery(hql.toString());
+		
+		if(!StringUtils.isEmpty(selYear)){
+			query.setString("selYear", selYear);
+		}
+		if(!StringUtils.isEmpty(selMonth)){
+			query.setString("selMonth", selMonth);
+		}
+		int delNum = query.executeUpdate();
+		
+		return delNum;
 	}
 
 	//根据用户的省份证查询半年的工资情况
