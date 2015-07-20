@@ -3057,7 +3057,7 @@ fieldset[disabled] input[type=checkbox], fieldset[disabled] input[type=radio], i
     }
 
 .input-sm {
-    height: 30px;
+    height: 20px;
     padding: 5px 10px;
     font-size: 12px;
     line-height: 1.5;

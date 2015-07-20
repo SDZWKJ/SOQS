@@ -123,16 +123,14 @@
         <div class="clearfix">
         	<div style="width:180px;" class="pull-left">
 	            <button type="button" id="salaryEdit" class="btn btn btn-primary btn-ms">修改</button>
-	            <!--  
 	            <button type="button" id="salaryDel" class="btn btn btn-primary btn-ms">删除</button>
-	            -->
 	            <button type="button" id="salaryImport" class="btn btn btn-primary btn-ms">导入</button>
         	</div>
-        	<div style="width:250px; margin-left:50px;" class="pull-left">
+        	<div style="width:200px; margin-left:10px;" class="pull-left">
         		<form class="form-horizontal">
-	        		<div class="form-group">
+	        		<div class="form-group" style="width:200px;">
 					    <label class="col-sm-2 control-label">年度:</label>
-					    <div class="col-sm-5">
+					    <div class="col-sm-5" style="width:80px;margin-left:0px;">
 					      <select class="form-control" id="selYear">
 							  <option value="2015">2015</option>
 							  <option value="2016">2016</option>
@@ -143,11 +141,11 @@
 					  </div>
 				</form>
         	</div>
-        	<div style="width:250px; margin-left:0px;" class="pull-left">
+        	<div style="width:200px; margin-left:0px;" class="pull-left">
         		<form class="form-horizontal">
-	        		<div class="form-group">
+	        		<div class="form-group" style="width:200px;">
 					    <label class="col-sm-2 control-label">月份:</label>
-					    <div class="col-sm-5">
+					    <div class="col-sm-4">
 					      <select class="form-control" id="selMonth">
 							  <option value="1">1</option>
 							  <option value="2">2</option>
@@ -166,8 +164,18 @@
 					  </div>
 				</form>
         	</div>
+        	<div style="width:200px; margin-left:0px;" class="pull-left">
+        		<form class="form-horizontal">
+	        		<div class="form-group" style="width:200px;">
+					    <label class="col-sm-2 control-label">姓名:</label>
+					    <div class="col-sm-5">
+						  <input class="form-control input-sm span1" type="text" id="selName" />
+					    </div>
+					  </div>
+				</form>
+        	</div>
         	<button type="button" id="salarySearch" class="btn btn btn-primary btn-ms">查询</button>
-        	<button type="button" id="delMonthRecord" class="btn btn btn-primary btn-ms">删除所选月记录</button>
+        	<button type="button" id="delMonthRecord" class="btn btn btn-primary btn-ms">删除所选月</button>
         </div>
             <hr/>
         	<div id="wrappedTab01">

@@ -55,7 +55,8 @@ public class SalaryServiceImpl extends BaseService<SalaryInfo> implements Salary
 		temp2.setSelYear(temp.getYearSalary());
 		temp2.setSelMonth(temp.getMonthSalary());
 		
-		int num = salaryDao.delMonthRecord(temp2);
+		//int num = salaryDao.delMonthRecord(temp2);
+		salaryDao.delMonthRecord(temp2);
 		//system.out.println("删除的条数："+num);
 		for(SalaryInfo salaryInfo : list){
 			salaryDao.save(salaryInfo);

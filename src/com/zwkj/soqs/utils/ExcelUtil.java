@@ -75,7 +75,7 @@ public class ExcelUtil {
 			int rowNum = sheet.getPhysicalNumberOfRows(); //行数
 			//int colNum = row.getPhysicalNumberOfCells();  //列数
 			
-			for(int i=3;i<rowNum;i++){  //从第四行开始读取数据
+			for(int i=4;i<rowNum;i++){  //从第五行开始读取数据
 				row = sheet.getRow(i);  //得到该行的数据
 				salaryInfo = new SalaryInfo();
 				empId = getCellFormatValue(row.getCell(1));

@@ -7,10 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -94,19 +90,20 @@ public class AdminCotroller extends BaseController {
 	@RequestMapping(value = "admin/getAllSalary", produces = "text/html;charset=utf-8")
 	public @ResponseBody 
 	String getAllSalaryInfo(HttpServletRequest request){
-		int curYear = Tools.getCurrentYear();      //获取当年
-		int curMonth = Tools.getCurrentMonth();    //获取当前月
+		//int curYear = Tools.getCurrentYear();      //获取当年
+		//int curMonth = Tools.getCurrentMonth();    //获取当前月
 		
 		String currentYear = request.getParameter("selYear");
 		String currentMonth = request.getParameter("selMonth");
+		String teacherName = request.getParameter("selName");
 		//System.out.println(currentYear);
 		//System.out.println(currentMonth);
-		if(Tools.isEmpty(currentYear)){
-			currentYear = String.valueOf(curYear);
-		}
-		if(Tools.isEmpty(currentMonth)){
-			currentMonth = String.valueOf(curMonth+1);
-		}
+//		if(Tools.isEmpty(currentYear)){
+//			currentYear = String.valueOf(curYear);
+//		}
+//		if(Tools.isEmpty(currentMonth)){
+//			currentMonth = String.valueOf(curMonth+1);
+//		}
 		
 		//System.out.println(currentYear);
 		//System.out.println(currentMonth);
@@ -114,6 +111,7 @@ public class AdminCotroller extends BaseController {
 		TeacherInfo teacherInfo = new TeacherInfo();
 		teacherInfo.setSelYear(currentYear);
 		teacherInfo.setSelMonth(currentMonth);
+		teacherInfo.setTeacherName(teacherName);
 		try {
 			returns = salaryService.getSalaryInfo(teacherInfo);
 		} catch (Exception e) {
@@ -208,7 +206,7 @@ public class AdminCotroller extends BaseController {
 	
 	
 	//工资信息的删除
-	//@RequestMapping(value="admin/deleteSalaryByIds",produces="text/html;charset=utf-8")
+	@RequestMapping(value="admin/deleteSalaryByIds",produces="text/html;charset=utf-8")
 	public @ResponseBody
 	String delteSalaryByIds(HttpServletRequest request){
 		returns = new ControllerReturns();
