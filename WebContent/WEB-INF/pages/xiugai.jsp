@@ -105,19 +105,19 @@
     <div class="login-y">
         <form class="form-horizontal" id="editPass" method="post">
             <div class="input-group">
-                <span class="input-group-addon" id="sizing-addon3">身份证：</span>
+                <span class="input-group-addon" id="sizing-addon3">　身份证：</span>
                 <input type="text" class="form-control" name="teacherId" placeholder="请输入十八位二代身份证" aria-describedby="sizing-addon2">
             </div>
             <br/>
 
             <div class="input-group">
-                <span class="input-group-addon" id="sizing-addon2">旧密码：</span>
+                <span class="input-group-addon" id="sizing-addon2">　旧密码：</span>
                 <input type="password" class="form-control" name="oldPass" placeholder="请输入旧密码" aria-describedby="sizing-addon3">
             </div>
             <br/>
 
             <div class="input-group">
-                <span class="input-group-addon" id="sizing-addon2">新密码：</span>
+                <span class="input-group-addon" id="sizing-addon2">　新密码：</span>
                 <input type="password" class="form-control" name="newPass" placeholder="请输入新密码" aria-describedby="sizing-addon3">
             </div>
             <br/>

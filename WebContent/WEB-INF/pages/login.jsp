@@ -113,7 +113,7 @@
             <br/>
 
             <div class="input-group">
-                <span class="input-group-addon" id="sizing-addon2">密 &nbsp;&nbsp;&nbsp; 码：</span>
+                <span class="input-group-addon" id="sizing-addon2">密　码：</span>
                 <input type="password" class="form-control" id="loginPass" name="loginPass" placeholder="请输入密码" aria-describedby="sizing-addon3" value="">
             </div>
             </br>

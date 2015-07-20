@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta content="山东省日照第一中学" name="keywords"/>
     <meta content="山东省日照第一中学" name="description"/>
-    <link rel="shortcut icon" type="images/favicon.icon">+
+    <link rel="shortcut icon" type="images/favicon.icon">
 
     <!--==规定双核浏览器优先级==-->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,8 +25,10 @@
     <link href="<%=contextPath%>/css/master.css" rel="stylesheet">
     
     <!-- jquery.dataTables.min.css -->
-    <link href="<%=contextPath%>/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="<%=contextPath%>/css/jquery.dataTables.min.css" rel="stylesheet"> 
 
+    <link href="<%=contextPath%>/css/custom.css" rel="stylesheet">
+    
     <!--==引用JS--bootstrap等js==-->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="<%=contextPath%>/js/jquery.1.9.1.js"></script>
@@ -34,7 +36,10 @@
     <script src="<%=contextPath%>/js/bootstrap.min.js"></script>
     <!-- jquery.dataTables.min.js -->
     <script src="<%=contextPath%>/js/jquery.dataTables.min.js"></script>
+    <!-- jquery.form.js -->
+    <script src="<%=contextPath%>/js/jquery.form.js"></script>
     <!-- mine js -->
+    <script src="<%=contextPath%>/js/min/ajaxReqLoading.js"></script>
     <script src="<%=contextPath%>/js/min/admin.js"></script>
     <script src="<%=contextPath%>/js/min/admin-tab2.js"></script>
 
@@ -118,7 +123,9 @@
         <div class="clearfix">
         	<div style="width:180px;" class="pull-left">
 	            <button type="button" id="salaryEdit" class="btn btn btn-primary btn-ms">修改</button>
+	            <!--  
 	            <button type="button" id="salaryDel" class="btn btn btn-primary btn-ms">删除</button>
+	            -->
 	            <button type="button" id="salaryImport" class="btn btn btn-primary btn-ms">导入</button>
         	</div>
         	<div style="width:250px; margin-left:50px;" class="pull-left">
@@ -126,11 +133,12 @@
 	        		<div class="form-group">
 					    <label class="col-sm-2 control-label">年度:</label>
 					    <div class="col-sm-5">
-					      <select class="form-control">
+					      <select class="form-control" id="selYear">
 							  <option value="" selected = "selected">默认当前年</option>
-							  <option value="15">15</option>
-							  <option value="16">16</option>
-							  <option value="17">17</option>
+							  <option value="2015">15</option>
+							  <option value="2016">16</option>
+							  <option value="2017">17</option>
+							  <option value="2018">18</option>
 						  </select>
 					    </div>
 					  </div>
@@ -141,17 +149,17 @@
 	        		<div class="form-group">
 					    <label class="col-sm-2 control-label">月份:</label>
 					    <div class="col-sm-5">
-					      <select class="form-control">
+					      <select class="form-control" id="selMonth">
 							  <option value="" selected = "selected">默认当前月</option>
-							  <option value="01">01</option>
-							  <option value="02">02</option>
-							  <option value="03">03</option>
-							  <option value="04">04</option>
-							  <option value="05">05</option>
-							  <option value="06">06</option>
-							  <option value="07">07</option>
-							  <option value="08">08</option>
-							  <option value="09">09</option>
+							  <option value="1">1</option>
+							  <option value="2">2</option>
+							  <option value="3">3</option>
+							  <option value="4">4</option>
+							  <option value="5">5</option>
+							  <option value="6">6</option>
+							  <option value="7">7</option>
+							  <option value="8">8</option>
+							  <option value="9">9</option>
 							  <option value="10">10</option>
 							  <option value="11">11</option>
 							  <option value="12">12</option>
@@ -161,6 +169,7 @@
 				</form>
         	</div>
         	<button type="button" id="salarySearch" class="btn btn btn-primary btn-ms">查询</button>
+        	<button type="button" id="delMonthRecord" class="btn btn btn-primary btn-ms">删除整月记录</button>
         </div>
             <hr/>
         	<div id="wrappedTab01">
@@ -174,7 +183,9 @@
             <button type="button" id="userAdd" class="btn btn-primary btn-ms">新增</button>
             <button type="button" id="userEdit" class="btn btn-primary btn-ms">修改</button>
             <button type="button" id="userDel" class="btn btn-primary btn-ms">删除</button>
+            <!--  
             <button type="button" id="userImport" class="btn btn-primary btn-ms">导入</button>
+            -->
             <hr/>
             <div id="wrappedTab02">
         		<table id="tab02">
@@ -243,6 +254,51 @@
 	</div>
 </div>
 <!-- 工资管理数据导入modal-END -->
+
+<!-- 工资导入提示覆盖modal-START -->
+<div class="modal fade" id="salaryInfoWrite" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title">数据覆盖提示窗口</h4>
+			</div>
+			<div class="modal-body">
+				<p style="color:red">数据库中包含此年度月份的记录,继续操作可能会覆盖这些数据。</p>
+				<p style="color:red">继续操作请点击继续按钮</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				<button type="button" class="btn btn-success">继续</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 工资导入提示覆盖modal-END -->
+
+<!-- 工资导入继续执行modal-START -->
+<div class="modal fade" id="salaryInfoContinue" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title">输入导入提示窗口</h4>
+			</div>
+			<div class="modal-body">
+				<p style="color:red">文件成功上传，请点击继续完成数据录入工作。</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				<button type="button" class="btn btn-success">继续</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 工资导入继续执行modal-END -->
 
 <!-- 工资信息修改modal-START -->
 <div class="modal fade" id="salaryEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
@@ -557,25 +613,25 @@
 			<div class="modal-body">
 				<form class="form-horizontal">
 					<div class="form-group">
-				    	<label for="teacherName1" class="col-sm-2 control-label">姓名:</label>
+				    	<label class="col-sm-2 control-label">姓名:</label>
 				     	<div class="col-sm-6">
 				        	<input type="text" class="form-control" placeholder="姓名" value="">
 				     	</div>
 				     </div>
 				 	 <div class="form-group">
-				     	<label for="teacherId1" class="col-sm-2 control-label">身份证:</label>
+				     	<label class="col-sm-2 control-label">身份证:</label>
 				    	<div class="col-sm-6">
-				        	<input type="text" class="form-control" placeholder="身份证" value="">
+				        	<input type="text" class="form-control" placeholder="身份证" value="" disabled="disabled">
 				    	</div>
 				    </div>
 				  	<div class="form-group">
-				    	<label for="year" class="col-sm-2 control-label">职工编号:</label>
+				    	<label class="col-sm-2 control-label">职工编号:</label>
 				    	<div class="col-sm-6">
 				        	<input type="text" class="form-control" placeholder="职工编号" value="">
 				    	</div>
 				 	</div>
 				 	<div class="form-group">
-				    	<label for="month" class="col-sm-2 control-label">查询密码:</label>
+				    	<label class="col-sm-2 control-label">查询密码:</label>
 				    	<div class="col-sm-6">
 				        	<input type="password" class="form-control" placeholder="不修改请留空" value="">
 				    	</div>
