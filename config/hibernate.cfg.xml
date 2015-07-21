@@ -6,7 +6,7 @@
   <!-- 1:Database connection settings -->
   <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
   <!--2:other configure -->
-  <property name="hibernate.show_sql">true</property>
+  <property name="hibernate.show_sql">false</property>
   <property name="hibernate.hbm2ddl.auto">none</property>
   <property name="hibernate.validator.apply_to_ddl">false</property> 
   <property name="hibernate.validator.autoregister_listeners">false</property>
