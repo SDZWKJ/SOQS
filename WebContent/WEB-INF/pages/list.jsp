@@ -100,7 +100,7 @@
 </div>
 
 <div class="content-con">
-    <h5><i style="color:#f32;font-weight: bold;">${teacherInfo.teacherName}</i> &nbsp;&nbsp; 老师，你好！<span>这是您这半年的工资情况！</span></h5>
+    <h5><i style="color:#f32;font-weight: bold;">${teacherInfo.teacherName}</i> &nbsp;&nbsp; 老师，你好！<span>这是您的工资情况！</span></h5>
     <hr/>
     <table id="salaryTab" cellspacing="0" width="100%">
     
