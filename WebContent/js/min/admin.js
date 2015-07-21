@@ -186,6 +186,19 @@ $(function(){
 			alert("请选择文件");
 			return false;
 		}
+		//console.log(file);
+		var suffix = file.substring(file.lastIndexOf('.')+1);
+		console.log(suffix);
+		if(suffix=="xlsx" || suffix=="XLSX"){
+			$("#uploadForm1 :file").val("");
+			alert("请先将Excel文件另存为97-2003版本后再操作!");
+			return false;
+		}else if(suffix != "xls" && suffix != "XLS"){
+			$("#uploadForm1 :file").val("");
+			alert("您上传的文件类型不正确,请上传Excel文件!");
+			return false;
+		}
+		
 		$("#uploadForm1").ajaxSubmit({
 			type:"POST",
 			dataType:"json",
