@@ -15,8 +15,8 @@
     <meta name="renderer" content="webkit">
 
     <title>山东省日照第一中学工资查询系统</title>
-    <link href="<%=contextPath%>/favicon.ico" type="image/x-icon" rel="icon">
-    <link href="<%=contextPath%>/favicon.ico" type="image/x-icon" rel="shortcut icon">
+    <link href="<%=contextPath%>/favicon/favicon.ico" type="image/x-icon" rel="icon">
+    <link href="<%=contextPath%>/favicon/favicon.ico" type="image/x-icon" rel="shortcut icon">
 
     <!-- Bootstrap -->
     <link href="<%=contextPath%>/css/bootstrap.min.css" rel="stylesheet">
