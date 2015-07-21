@@ -137,7 +137,8 @@
     <p style="width: 100%;">日照一中 版权所有(C) &nbsp; 2015-2020 鲁ICP备05043509号</p>
 
     <p style="width: 100%;">学校邮箱： <a href="mailto:rzdyzx@163.com">RZDYZX@163.com</a>
-        技术支持：<a href="javascript:void(0)" style="color:#333;">山东展望信息科技有限公司</a></p>
+        技术支持：<a href="javascript:void(0)" style="color:#333;">山东展望信息科技有限公司</a>
+    <a href="http://www.rzyz.org.cn:8088/SOQS/admin/login.html" target="_blank">后台登录</a></p>
 </div>
 <!--==footer==-->
 <!-- 隐藏域开始 -->
