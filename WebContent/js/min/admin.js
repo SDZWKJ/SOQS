@@ -37,6 +37,9 @@ $(function(){
 					$("#wrappedTab01").append(tab01);
 					buildTab01(jsonData.data);
 				}
+			},
+			error:function(XMLHttpRequest, textStatus, errorThrown){
+				alert("服务器内部错误,如果您长时间未操作，可能是会话过期，请尝试刷新界面，重新登录!");
 			}
 		});
 	}
@@ -151,7 +154,7 @@ $(function(){
 				}
 			},
 			error:function(XMLHttpRequest, textStatus, errorThrown){
-				alert("服务器内部错误");
+				alert("服务器内部错误,如果您长时间未操作，可能是会话过期，请尝试刷新界面，重新登录!");
 			}
 		});
 	});
@@ -241,7 +244,7 @@ $(function(){
 				}
 			},
 			error:function(XMLHttpRequest, textStatus, errorThrown){
-				alert("服务器内部错误");
+				alert("服务器内部错误,如果您长时间未操作，可能是会话过期，请尝试刷新界面，重新登录!");
 			}
 		});
 	};
@@ -434,7 +437,7 @@ $(function(){
 					}
 				},
 				error:function(XMLHttpRequest, textStatus, errorThrown){
-					alert("服务器内部错误");
+					alert("服务器内部错误,如果您长时间未操作，可能是会话过期，请尝试刷新界面，重新登录!");
 				},
 				complete:function(XMLHttpRequest, textStatus){
 					$("#salaryEditModal").modal('hide');
@@ -481,7 +484,7 @@ $(function(){
 				}
 			},
 			error:function(XMLHttpRequest, textStatus, errorThrown){
-				alert("服务器内部错误");
+				alert("服务器内部错误,如果您长时间未操作，可能是会话过期，请尝试刷新界面，重新登录!");
 			}
 		});
 	});

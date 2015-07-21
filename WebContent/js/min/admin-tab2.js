@@ -24,7 +24,7 @@ $(function(){
 				}
 			},
 			error:function(XMLHttpRequest, textStatus, errorThrown){
-				alert("服务器内部错误");
+				alert("服务器内部错误,如果您长时间未操作，可能是会话过期，请尝试刷新界面，重新登录!");
 			}
 		});//ajax-END
 	}
@@ -170,7 +170,7 @@ $(function(){
 					}
 				},
 				error:function(XMLHttpRequest, textStatus, errorThrown){
-					alert("服务器内部错误");
+					alert("服务器内部错误,如果您长时间未操作，可能是会话过期，请尝试刷新界面，重新登录!");
 				}
 			});
 		}else{
@@ -242,7 +242,7 @@ $(function(){
 					}
 				},
 				error:function(XMLHttpRequest, textStatus, errorThrown){
-					alert("服务器内部错误");
+					alert("服务器内部错误,如果您长时间未操作，可能是会话过期，请尝试刷新界面，重新登录!");
 				}
 			});
 		}else{
@@ -284,7 +284,7 @@ $(function(){
 				}
 			},
 			error:function(XMLHttpRequest, textStatus, errorThrown){
-				alert("服务器内部错误");
+				alert("服务器内部错误,如果您长时间未操作，可能是会话过期，请尝试刷新界面，重新登录!");
 			}
 		});
 	});
