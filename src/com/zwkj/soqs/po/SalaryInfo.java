@@ -45,7 +45,7 @@ public class SalaryInfo implements Serializable{
 	private String kgjjMoney;             //扣公积金
 	private String kyalbxMoney;           //扣养老保险
 	private String kyilbxMoney;           //扣医疗保险
-	private String dbbzjMoney;            //大病补助金
+	private String dbbzjMoney;            //大病补助金--> 改成 "职业年金"了
 	private String iitMoney;              //应纳所得税额
 	private String kiitMoney;			  //扣所得税
 	private String yearSalary;                  //年份
