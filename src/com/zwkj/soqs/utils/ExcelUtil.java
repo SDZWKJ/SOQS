@@ -78,7 +78,7 @@ public class ExcelUtil {
 			for(int i=3;i<rowNum;i++){  //从第四行开始读取数据
 				row = sheet.getRow(i);  //得到该行的数据
 				salaryInfo = new SalaryInfo();
-				empId = getCellFormatValue(row.getCell(1));
+				empId = getCellFormatValueDef(row.getCell(1));
 				teacherName = getCellFormatValue(row.getCell(2));
 				yfSalary = getCellFormatValue(row.getCell(3));
 				sfSalary = getCellFormatValue(row.getCell(4));
@@ -109,8 +109,8 @@ public class ExcelUtil {
 				dbbzjMoney = getCellFormatValue(row.getCell(29));
 				iitMoney = getCellFormatValue(row.getCell(30));
 				kiitMoney = getCellFormatValue(row.getCell(31));
-				monthSalary = getCellFormatValue(row.getCell(32));
-				yearSalary = getCellFormatValue(row.getCell(34));
+				monthSalary = getCellFormatValueDef(row.getCell(32));
+				yearSalary = getCellFormatValueDef(row.getCell(34));
 				dateSalary = null;
 				sfjsTax = getCellFormatValue(row.getCell(41));
 				salaryInfo.setEmpId(empId);
@@ -208,8 +208,47 @@ public class ExcelUtil {
 		return list;
 	}
 	
+	//小数
 	@SuppressWarnings("deprecation")
 	private String getCellFormatValue(HSSFCell cell) {
+		String cellValue = "";
+		if (cell != null) {
+			// 判断cell的Type
+			switch (cell.getCellType()) {
+			case XSSFCell.CELL_TYPE_NUMERIC: //数字和时间类型
+				DecimalFormat df = new DecimalFormat("0.00");
+				if(HSSFDateUtil.isCellDateFormatted(cell)){
+					// 如果是date，转化为date格式
+					// 方法1：这样子的data格式是带时分秒的：2011-10-12 0:00:00
+					cellValue = cell.getDateCellValue().toLocaleString();
+
+					// 方法2：这样子的data格式是不带带时分秒的：2011-10-12
+					// Date date = cell.getDateCellValue();
+					// SimpleDateFormat sdf = new
+					// SimpleDateFormat("yyyy-MM-dd");
+					// cellValue = sdf.format(date);
+				}else{
+					cellValue = df.format(cell.getNumericCellValue());
+					//cellValue = cell.getNumericCellValue();
+					//cellValue = cell.getRichStringCellValue().getString();
+				}
+				break;
+			case XSSFCell.CELL_TYPE_STRING: //字符类型
+				cellValue = cell.getRichStringCellValue().getString();
+				break;
+			case XSSFCell.CELL_TYPE_BOOLEAN://布尔类型
+				cellValue = String.valueOf(cell.getBooleanCellValue());
+				break;
+			default:                        //默认情况
+				cellValue = "";
+			}
+		}
+		return cellValue;
+	}
+	
+	//DecimalFormat df = new DecimalFormat("0"); 没有小数
+	@SuppressWarnings("deprecation")
+	private String getCellFormatValueDef(HSSFCell cell) {
 		String cellValue = "";
 		if (cell != null) {
 			// 判断cell的Type
@@ -228,6 +267,8 @@ public class ExcelUtil {
 					// cellValue = sdf.format(date);
 				}else{
 					cellValue = df.format(cell.getNumericCellValue());
+					//cellValue = cell.getNumericCellValue();
+					//cellValue = cell.getRichStringCellValue().getString();
 				}
 				break;
 			case XSSFCell.CELL_TYPE_STRING: //字符类型
